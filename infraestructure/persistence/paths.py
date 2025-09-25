@@ -8,6 +8,14 @@ class paths:
         system = platform.system()
         if system == 'Windows':
             base = os.getenv("APPDATA", "")
+        elif system == 'Darwin':  # macOS
+            base = os.getenv("HOME", "")
+        elif system == 'Linux':
+            alt = os.path.join(os.getenv("HOME", ""), ".local", "share")
+            base = os.getenv("XDG_DATA_HOME", alt)
+        else:
+            raise NotImplementedError(f"Unsupported OS: {system}")
+
         path = os.path.join(base, "HabitApp")
         os.makedirs(path, exist_ok=True)
         return path
