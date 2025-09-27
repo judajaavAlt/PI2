@@ -49,7 +49,35 @@ class HabitSqliteRepository(HabitRepository):
             print("📦 Tablas creadas (si no existían)")
 
     def create_habit(self, habit: Habit) -> Habit:
-        pass
+        """Create a new habit in the database and return the created habit."""
+        # Early stop if habit already exists
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT habit_id FROM habits WHERE habit_id = ?",
+                           (habit.habit_id,))
+            existing_habit = cursor.fetchone()
+
+            if existing_habit:
+                error_msg = f"Habit with id {habit.habit_id} already exists."
+                raise ValueError(error_msg)
+
+            # Insert new habit into the database
+            insert_sql = """
+            INSERT INTO habits (habit_id, name, description, frequency,
+            streak, is_completed)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """
+            cursor.execute(insert_sql, (
+                habit.habit_id,
+                habit.name,
+                habit.description,
+                habit.frequency.value if habit.frequency else None,
+                habit.streak.value if habit.streak else 0,
+                habit.is_completed
+            ))
+            conn.commit()
+
+        return habit
 
     def update_habit(self, id: int, habit: Habit) -> Habit:
         pass
