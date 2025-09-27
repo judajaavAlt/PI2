@@ -1,6 +1,7 @@
 import sqlite3
 from domain.repositories.habit_repository import HabitRepository
 from infraestructure.persistence.paths import paths
+from domain.entities.habit import Habit
 
 
 class HabitSqliteRepository(HabitRepository):
@@ -35,9 +36,11 @@ class HabitSqliteRepository(HabitRepository):
                     log_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     habit_id INTEGER NOT NULL,
                     date DATE NOT NULL,
-                    status TEXT NOT NULL CHECK(status IN ('completed', 'missed')),
+                    status TEXT NOT NULL CHECK(status IN ('completed',
+                    'missed')),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (habit_id) REFERENCES habits(habit_id) ON DELETE CASCADE
+                    FOREIGN KEY (habit_id) REFERENCES habits(habit_id) ON
+                    DELETE CASCADE
                 );
                 """
             )
@@ -45,6 +48,17 @@ class HabitSqliteRepository(HabitRepository):
             conn.commit()
             print("📦 Tablas creadas (si no existían)")
 
+    def create_habit(self, habit: Habit) -> Habit:
+        pass
 
-    def create_habit(self):
+    def update_habit(self, id: int, habit: Habit) -> Habit:
+        pass
+
+    def delete_habit(self, id: int) -> Habit:
+        pass
+
+    def get_habit(self, id: int) -> Habit:
+        pass
+
+    def get_all_habits(self) -> list[Habit]:
         pass
