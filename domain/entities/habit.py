@@ -1,9 +1,11 @@
 from domain.value_objects.name import Name
+from domain.value_objects.streak import Streak
+from domain.value_objects.frequency import Frequency
 from domain.value_objects.description import Description
 
 
 class Habit:
-    def __init__(self, habit_id, name, description, frequency):
+    def __init__(self, habit_id, name, description, frequency=None, streak=None):
         if not isinstance(name, Name):
             error_msg = f"name must be of type Name, got {type(name).__name__}"
             raise TypeError(error_msg)
@@ -15,12 +17,22 @@ class Habit:
         self.habit_id = habit_id
         self.name = name
         self.description = description
-        self.frequency = frequency
+        self.frequency = frequency if frequency else Frequency()
         self.is_completed = False
-        self.streak = 0
+        self.streak = streak if streak else Streak(0)
 
     def __eq__(self, other: 'Habit') -> bool:
         return self.habit_id == other.habit_id or self.name == other.name
+
+    def complete(self):
+        """Marca el hábito como completado y aumenta la racha."""
+        self.is_completed = True
+        self.streak = self.streak.increase()
+
+    def fail(self):
+        """Resetea la racha si el hábito no se cumplió."""
+        self.is_completed = False
+        self.streak = self.streak.reset()
 
     def __str__(self):
         string = f"id:{self.habit_id}"
