@@ -1,6 +1,13 @@
 import sqlite3
 from domain.repositories.habit_repository import HabitRepository
 from infraestructure.persistence.paths import paths
+
+# Value Objects
+from domain.value_objects.name import Name
+from domain.value_objects.description import Description
+from domain.value_objects.frequency import Frequency
+from domain.value_objects.streak import Streak
+
 from domain.entities.habit import Habit
 
 
@@ -55,10 +62,68 @@ class HabitSqliteRepository(HabitRepository):
         pass
 
     def delete_habit(self, id: int) -> Habit:
-        pass
+        """Elimina un hábito por su id y devuelve el hábito eliminado."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+
+            # Buscar primero el hábito
+            cursor.execute("SELECT habit_id, name, description, frequency, is_active FROM habits WHERE habit_id = ?", (id,))
+            row = cursor.fetchone()
+            if not row:
+                raise ValueError(f"Habit with id {id} not found")
+
+            # Construimos el objeto Habit ANTES de borrarlo
+            habit = Habit(
+                habit_id=row[0],
+                name=Name(row[1]),
+                description=Description(row[2]),
+                frequency=Frequency,
+                streak=Streak(0)  # lo inicializamos en 0 por ahora
+            )
+
+            # Borrar (aquí lo elimino físicamente, podrías cambiarlo por UPDATE is_active=0)
+            cursor.execute("DELETE FROM habits WHERE habit_id = ?", (id,))
+            conn.commit()
+
+            return habit
 
     def get_habit(self, id: int) -> Habit:
         pass
 
     def get_all_habits(self) -> list[Habit]:
-        pass
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT habit_id, name, description, frequency, is_active
+                FROM habits
+                WHERE is_active = 1
+            """)
+            rows = cursor.fetchall()
+
+            habits = []
+            for row in rows:
+                freq_text = row[3]
+
+                # Construcción del VO Frequency según lo que venga en DB
+                frequency = Frequency()
+                if freq_text == "daily":
+                    # Activamos todos los días
+                    for day in Frequency.DAYS:
+                        frequency.set_day(day)
+                elif freq_text == "weekly":
+                    # Activamos solo lunes como ejemplo
+                    frequency.set_day("lunes")
+                else:
+                    # Si no es un valor reconocido, lo dejamos vacío
+                    frequency = Frequency()
+
+                habit = Habit(
+                    habit_id=row[0],
+                    name=Name(row[1]),
+                    description=Description(row[2]),
+                    frequency=frequency,
+                    streak=Streak(0)  # por ahora arrancamos en 0
+                )
+                habits.append(habit)
+
+            return habits

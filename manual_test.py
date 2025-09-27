@@ -1,30 +1,45 @@
-# manual_test.py (recomendado)
-from domain.entities.habit import Habit
+from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from application.use_cases.list_habits import ListHabits
+from application.use_cases.delete_habit import DeleteHabit
 from domain.value_objects.name import Name
 from domain.value_objects.description import Description
 from domain.value_objects.frequency import Frequency
+from domain.entities.habit import Habit
+import sqlite3
+
 
 def manual_test():
-    name = Name("Leer un libro")
-    desc = Description("Leer al menos 10 páginas al día")
-    frequency = Frequency()
-    frequency.set_day("lunes"); frequency.set_day("martes"); frequency.set_day("jueves")
+    repo = HabitSqliteRepository()
 
-    habit = Habit(1, name, desc, frequency)   # habit.streak se crea internamente como Streak(0)
-    print("Habit inicial:", habit)
+    # --- Paso 1: Insertamos hábitos quemados para probar ---
+    conn = sqlite3.connect(repo.db_path)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM habits")  # limpiamos
+    cursor.execute("INSERT INTO habits (name, description, frequency) VALUES (?, ?, ?)",
+                   ("Leer un libro", "Leer al menos 10 páginas", "daily"))
+    cursor.execute("INSERT INTO habits (name, description, frequency) VALUES (?, ?, ?)",
+                   ("Ir al gimnasio", "Hacer ejercicio 3 veces por semana", "weekly"))
+    conn.commit()
+    conn.close()
 
-    habit.complete()
-    print("Después de complete():", habit.streak)   # -> Streak(1)
+    # --- Paso 2: Listamos hábitos ---
+    list_use_case = ListHabits(repo)
+    habits = list_use_case.execute()
+    print("📋 Lista de hábitos al inicio:")
+    for h in habits:
+        print("-", h)
 
-    habit.complete()
-    print("Después de otro complete():", habit.streak)   # -> Streak(2)
+    # --- Paso 3: Borramos un hábito ---
+    habit_to_delete = habits[0]
+    delete_use_case = DeleteHabit(repo)
+    deleted = delete_use_case.execute(habit_to_delete.habit_id)
+    print(f"\n🗑️ Borrando hábito: {deleted.name}")
 
-    habit.fail()
-    print("Después de fail():", habit.streak)   # -> Streak(0)
-
-    # Verificamos frecuencia
-    print("¿El hábito se hace el lunes?", frequency.is_active("lunes"))   # True
-    print("¿El hábito se hace el miércoles?", frequency.is_active("miercoles"))  # False
+    # --- Paso 4: Volvemos a listar ---
+    habits = list_use_case.execute()
+    print("\n📋 Lista de hábitos después de borrar:")
+    for h in habits:
+        print("-", h)
 
 
 if __name__ == "__main__":

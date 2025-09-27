@@ -20,5 +20,6 @@ class HabitRepository(ABC):
         pass
 
     @abstractmethod
-    def get_all_habits(self, id: int) -> list[Habit]:
-        pass
+    def get_all_habits(self) -> list[Habit]:
+        """Devuelve la lista de todos los habitos almacenados."""
+        raise NotImplementedError
