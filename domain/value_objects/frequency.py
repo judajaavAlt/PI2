@@ -5,6 +5,10 @@ class Frequency:
     def __init__(self, days=None):
         self.days = [0] * 7 if days is None else days
 
+    @property
+    def value(self):
+        return self.days
+
     def set_day(self, day):
         if isinstance(day, int):  # Si pasa un número (0-6)
             if day < 0 or day > 6:
