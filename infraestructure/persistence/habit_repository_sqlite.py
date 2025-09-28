@@ -9,10 +9,11 @@ from domain.value_objects.frequency import Frequency
 from domain.value_objects.streak import Streak
 
 from domain.entities.habit import Habit
+from application.dto.habit_dto import HabitDto
+from domain.utils.checks import check_type
 
 
 class HabitSqliteRepository(HabitRepository):
-
     def __init__(self):
         """Inicializa el repositorio y asegura que las tablas existan."""
         self.db_path = paths.get_db_path()
@@ -29,34 +30,19 @@ class HabitSqliteRepository(HabitRepository):
                     habit_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     description TEXT,
-                    frequency TEXT NOT NULL, -- Ej: 'daily', 'weekly', 'custom'
-                    is_active INTEGER DEFAULT 1, -- 1 = activo, 0 = eliminado
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-                """
-            )
-
-            cursor.execute(
-                """
-                CREATE TABLE IF NOT EXISTS habit_logs (
-                    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    habit_id INTEGER NOT NULL,
-                    date DATE NOT NULL,
-                    status TEXT NOT NULL CHECK(status IN ('completed',
-                    'missed')),
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (habit_id) REFERENCES habits(habit_id) ON
-                    DELETE CASCADE
+                    frequency TEXT NOT NULL, -- store list as JSON string
+                    is_completed INTEGER NOT NULL DEFAULT 0, -- 0 or 1
+                    streak INTEGER NOT NULL DEFAULT 0
                 );
                 """
             )
 
             conn.commit()
-            print("📦 Tablas creadas (si no existían)")
+            print("Tablas creadas (si no existían)")
 
     def create_habit(self, habit: Habit) -> Habit:
         """Create a new habit in the database and return the created habit."""
+        check_type("habit", habit, Habit)
         # Early stop if habit already exists
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
@@ -69,25 +55,49 @@ class HabitSqliteRepository(HabitRepository):
                 raise ValueError(error_msg)
 
             # Insert new habit into the database
-            insert_sql = """
-            INSERT INTO habits (habit_id, name, description, frequency,
-            streak, is_completed)
-            VALUES (?, ?, ?, ?, ?, ?)
+            sql = """
+            INSERT INTO habits (name, description, frequency,
+                                is_completed, streak)
+            VALUES (?, ?, ?, ?, ?)
             """
-            cursor.execute(insert_sql, (
-                habit.habit_id,
-                habit.name,
-                habit.description,
-                habit.frequency.value if habit.frequency else None,
-                habit.streak.value if habit.streak else 0,
-                habit.is_completed
-            ))
+            values = HabitDto.domain_to_infraestructure(habit)[1:]
+            cursor.execute(sql, values)
             conn.commit()
-
-        return habit
+            habit_id = cursor.lastrowid
+            new_habit = (habit_id,) + values
+            return HabitDto.infraestructure_to_domain(new_habit)
 
     def update_habit(self, id: int, habit: Habit) -> Habit:
-        pass
+        """Update an existing habit in the database
+        and return the updated habit."""
+        check_type("habit", habit, Habit)
+
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+
+            # Check that the habit exists
+            cursor.execute("SELECT habit_id FROM habits WHERE habit_id = ?",
+                           (id,))
+            existing_habit = cursor.fetchone()
+
+            if not existing_habit:
+                error_msg = f"Habit with id {id} does not exist."
+                raise ValueError(error_msg)
+
+            # Update habit in DB
+            sql = """
+            UPDATE habits
+            SET name = ?, description = ?, frequency = ?, is_completed = ?,
+                streak = ?
+            WHERE habit_id = ?
+            """
+            values = HabitDto.domain_to_infraestructure(habit)[1:]
+            cursor.execute(sql, values + (id,))
+            conn.commit()
+
+            # Build updated habit tuple
+            updated_habit = (id,) + values
+            return HabitDto.infraestructure_to_domain(updated_habit)
 
     def delete_habit(self, id: int) -> Habit:
         """Elimina un hábito por su id y devuelve el hábito eliminado."""
@@ -116,7 +126,7 @@ class HabitSqliteRepository(HabitRepository):
             return habit
 
     def get_habit(self, id: int) -> Habit:
-        pass
+        return Habit(1, Name("a"), Description("A"))
 
     def get_all_habits(self) -> list[Habit]:
         with sqlite3.connect(self.db_path) as conn:
