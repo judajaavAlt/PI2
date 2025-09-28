@@ -5,7 +5,8 @@ from domain.value_objects.description import Description
 
 
 class Habit:
-    def __init__(self, habit_id, name, description, frequency=None, streak=None):
+    def __init__(self, habit_id, name, description, frequency=None,
+                 streak=None):
         if not isinstance(name, Name):
             error_msg = f"name must be of type Name, got {type(name).__name__}"
             raise TypeError(error_msg)
