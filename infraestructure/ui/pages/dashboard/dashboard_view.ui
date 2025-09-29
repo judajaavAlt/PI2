@@ -13,17 +13,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="habitsContainer" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>131</width>
-     <height>16</height>
+     <x>0</x>
+     <y>9</y>
+     <width>571</width>
+     <height>141</height>
     </rect>
-   </property>
-   <property name="text">
-    <string>Mostrando dashboard</string>
    </property>
   </widget>
  </widget>
