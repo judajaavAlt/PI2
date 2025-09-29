@@ -11,7 +11,7 @@ class UpdateHabit:
         self.repository = repository
 
     def execute(self, id: int, name: str, description: str,
-                frequency: Frequency, is_completed: bool, streak: int):
+                frequency: list, is_completed: bool, streak: int):
         habit = Habit(Name(name),
                       Description(description),
                       frequency=Frequency(frequency),
