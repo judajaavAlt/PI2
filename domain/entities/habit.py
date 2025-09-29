@@ -7,12 +7,12 @@ from domain.utils.checks import check_type
 
 class Habit:
     def __init__(self,
-                 habit_id: int,
                  name: Name,
                  description: Description, *,
                  is_completed: bool = False,
                  frequency: Frequency = Frequency(),
-                 streak: Streak = Streak(0)):
+                 streak: Streak = Streak(0),
+                 habit_id: int = 0):
 
         check_type("habit_id", habit_id, int)
         if habit_id < 0:
@@ -54,12 +54,13 @@ class Habit:
         return string
 
     def copy(self):
-        copy = Habit(self.habit_id,
+        copy = Habit(
                      self.name,
                      self.description,
                      is_completed=self.is_completed,
                      frequency=self.frequency,
-                     streak=self.streak)
+                     streak=self.streak,
+                     habit_id=self.habit_id)
         return copy
 
     def modify(self, name=None, description=None, frequency=None,
