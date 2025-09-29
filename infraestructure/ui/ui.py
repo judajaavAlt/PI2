@@ -5,6 +5,8 @@ import os
 from infraestructure.ui.pages.config.config import ConfigPage
 from infraestructure.ui.pages.dashboard.dashboard import DashboardPage
 from infraestructure.ui.pages.habits.habits import HabitsPage
+from infraestructure.ui.pages.habit_detail.habit_detail import HabitDetailPage
+from infraestructure.ui.pages.habit_form.habit_form import HabitFormPage
 
 
 def generate_ui_file_path(file: str):
@@ -31,14 +33,29 @@ class MainWindow:
         self.header_content_title: QLabel = self.window.findChild(
             QLabel, "header_content_title"
         )
+        self.btn_header_content: QPushButton = self.window.findChild(
+            QPushButton, "btn_header_content"
+        )
         self.main_stacked_widget = self.window.findChild(
             QStackedWidget, "main_stacked_widget"
+        )
+        self.edit_button = self.window.findChild(
+            QPushButton, "edit_button"
         )
 
         # Connect buttons with a single function
         self.btn_sidebar_1.clicked.connect(lambda: self.change_page(0))
         self.btn_sidebar_2.clicked.connect(lambda: self.change_page(1))
         self.btn_sidebar_3.clicked.connect(lambda: self.change_page(2))
+        props = {
+            "id": 1,
+            "name": "Esto es un hábito",
+            "description": "Esta es una descripción",
+            "frequency": "Lunes, Martes, Jueves",
+        }
+        self.btn_header_content.clicked.connect(
+            lambda: self.change_page(4, props))
+        self.edit_button.clicked.connect(lambda: self.change_page(3, props))
 
         self.load_pages()
 
@@ -55,16 +72,26 @@ class MainWindow:
         self.dashboard_page = DashboardPage()
         self.habits_page = HabitsPage()
         self.config_page = ConfigPage()
+        self.habits_detail_page = HabitDetailPage()
+        self.habits_form_page = HabitFormPage()
 
         self.main_stacked_widget.addWidget(self.dashboard_page.window)
         self.main_stacked_widget.addWidget(self.habits_page.window)
         self.main_stacked_widget.addWidget(self.config_page.window)
+        self.main_stacked_widget.addWidget(self.habits_detail_page.window)
+        self.main_stacked_widget.addWidget(self.habits_form_page.window)
 
-    def change_page(self, index: int):
+    def change_page(self, index: int, props: dict = None):
         match index:
             case 0: self.change_header_content_title("Dashboard")
             case 1: self.change_header_content_title("Hábitos")
             case 2: self.change_header_content_title("Configuración")
+            case 3:
+                self.change_header_content_title("Hábito: Detalle")
+                self.habits_detail_page.set_props(props)
+            case 4:
+                self.change_header_content_title("Hábito: Formulario")
+                self.habits_form_page.set_props(props)
         self.main_stacked_widget.setCurrentIndex(index)
 
     def change_header_content_title(self, title: str):
