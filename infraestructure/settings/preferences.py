@@ -1,4 +1,3 @@
-# settings/preferences.py
 import json
 import os
 

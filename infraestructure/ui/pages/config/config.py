@@ -1,11 +1,11 @@
 # ui/config_page.py
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, Qt
-from PySide6.QtWidgets import QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton
 from PySide6.QtGui import QPixmap
 import os
 
-from infrastructure.repositories.preferences_user_repository import PreferencesUserRepository
+from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository
 from application.use_cases.update_profile_use_case import UpdateProfileUseCase
 
 def generate_ui_file_path(file: str):
@@ -22,7 +22,7 @@ class ConfigPage:
         # buscar widgets por objectName (más fiable con QUiLoader)
         self.save_btn = self.window.findChild(QPushButton, "saveButton")
         self.cancel_btn = self.window.findChild(QPushButton, "cancelButton")
-        self.load_img_btn = self.window.findChild(QPushButton, "loadImageButton")
+        self.load_img_btn = self.window.findChild(QToolButton, "loadImageButton")
         self.image_label = self.window.findChild(QLabel, "imageLabel")
         self.name_input = self.window.findChild(QLineEdit, "nameLineEdit")
 
@@ -74,7 +74,7 @@ class ConfigPage:
         photo = self.photo_path or ""
         self.use_case.execute(name, photo)
         QMessageBox.information(self.window, "Guardado", "Perfil actualizado correctamente")
-        self.window.close()
+        
 
     def on_cancel(self):
-        self.window.close()
+        QMessageBox.information(self.window, "No guardado", "Los cambios en el perfil no han sido guardados")
