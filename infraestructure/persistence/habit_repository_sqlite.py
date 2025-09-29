@@ -46,13 +46,13 @@ class HabitSqliteRepository(HabitRepository):
         # Early stop if habit already exists
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT habit_id FROM habits WHERE habit_id = ?",
-                           (habit.habit_id,))
+            cursor.execute("SELECT habit_id FROM habits WHERE name = ?",
+                           (habit.name.value,))
             existing_habit = cursor.fetchone()
 
             if existing_habit:
-                error_msg = f"Habit with id {habit.habit_id} already exists."
-                raise ValueError(error_msg)
+                err_msg = f"Habit with name {habit.name.value} already exists."
+                raise ValueError(err_msg)
 
             # Insert new habit into the database
             sql = """
