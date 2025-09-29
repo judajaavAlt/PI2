@@ -105,63 +105,52 @@ class HabitSqliteRepository(HabitRepository):
             cursor = conn.cursor()
 
             # Buscar primero el hábito
-            cursor.execute("SELECT habit_id, name, description, frequency, is_active FROM habits WHERE habit_id = ?", (id,))
+            cursor.execute("""
+                SELECT habit_id, name, description, frequency, is_completed, streak
+                FROM habits
+                WHERE habit_id = ?
+            """, (id,))
             row = cursor.fetchone()
+
             if not row:
                 raise ValueError(f"Habit with id {id} not found")
 
             # Construimos el objeto Habit ANTES de borrarlo
-            habit = Habit(
-                habit_id=row[0],
-                name=Name(row[1]),
-                description=Description(row[2]),
-                frequency=Frequency,
-                streak=Streak(0)  # lo inicializamos en 0 por ahora
-            )
+            habit = HabitDto.infraestructure_to_domain(row)
 
-            # Borrar (aquí lo elimino físicamente, podrías cambiarlo por UPDATE is_active=0)
+            # Eliminar físicamente
             cursor.execute("DELETE FROM habits WHERE habit_id = ?", (id,))
             conn.commit()
 
             return habit
 
     def get_habit(self, id: int) -> Habit:
-        return Habit(1, Name("a"), Description("A"))
+        """Obtiene un hábito por su id y lo devuelve como entidad de dominio."""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT habit_id, name, description, frequency, is_completed, streak
+                FROM habits
+                WHERE habit_id = ?
+            """, (id,))
+            row = cursor.fetchone()
+
+            if not row:
+                raise ValueError(f"Habit with id {id} not found")
+
+            return HabitDto.infraestructure_to_domain(row)
 
     def get_all_habits(self) -> list[Habit]:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT habit_id, name, description, frequency, is_active
+                SELECT habit_id, name, description, frequency, is_completed, streak
                 FROM habits
-                WHERE is_active = 1
+                WHERE is_completed = 1
             """)
             rows = cursor.fetchall()
 
-            habits = []
-            for row in rows:
-                freq_text = row[3]
-
-                # Construcción del VO Frequency según lo que venga en DB
-                frequency = Frequency()
-                if freq_text == "daily":
-                    # Activamos todos los días
-                    for day in Frequency.DAYS:
-                        frequency.set_day(day)
-                elif freq_text == "weekly":
-                    # Activamos solo lunes como ejemplo
-                    frequency.set_day("lunes")
-                else:
-                    # Si no es un valor reconocido, lo dejamos vacío
-                    frequency = Frequency()
-
-                habit = Habit(
-                    habit_id=row[0],
-                    name=Name(row[1]),
-                    description=Description(row[2]),
-                    frequency=frequency,
-                    streak=Streak(0)  # por ahora arrancamos en 0
-                )
-                habits.append(habit)
+            # Convertir cada row en una entidad Habit usando el DTO
+            habits = [HabitDto.infraestructure_to_domain(row) for row in rows]
 
             return habits

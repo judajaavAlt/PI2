@@ -3,7 +3,16 @@ class Frequency:
             "sabado", "domingo"]
 
     def __init__(self, days=None):
-        self.days = [0] * 7 if days is None else days
+        if days is None:
+            self.days = [0] * 7
+        else:
+            if not isinstance(days, list):
+                raise TypeError("days debe ser una lista de enteros (0 o 1).")
+            if len(days) != 7:
+                raise ValueError("days debe tener exactamente 7 elementos.")
+            if not all(d in (0, 1) for d in days):
+                raise ValueError("Cada elemento en days debe ser 0 o 1.")
+            self.days = days
 
     @property
     def value(self):
