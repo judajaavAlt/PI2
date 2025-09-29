@@ -15,12 +15,12 @@ class HabitDto:
         frequency = Frequency(json.loads(frequency))
         is_completed = is_completed == 1
         streak = Streak(streak)
-        return Habit(habit_id,
-                     name,
+        return Habit(name,
                      description,
                      frequency=frequency,
                      is_completed=is_completed,
-                     streak=streak)
+                     streak=streak,
+                     habit_id=habit_id)
 
     @classmethod
     def domain_to_infraestructure(cls, habit: Habit) -> tuple:
