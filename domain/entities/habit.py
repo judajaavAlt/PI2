@@ -21,6 +21,7 @@ class Habit:
         check_type("name", name, Name)
         check_type("description", description, Description)
         check_type("frequency", frequency, Frequency)
+        check_type("is_completed", is_completed, bool)
         check_type("streak", streak, Streak)
 
         self.habit_id = habit_id
