@@ -3,6 +3,10 @@ from domain.entities.habit import Habit
 from application.use_cases.create_habit import CreateHabit
 from application.use_cases.mark_habits_done import SwitchHabitState
 from application.use_cases.update_habit import UpdateHabit
+from application.use_cases.delete_habit import DeleteHabit
+from application.use_cases.list_habits import ListHabits    
+from application.use_cases.get_habit import GetHabit
+from application.use_cases.habit_progress import HabitProgress
 
 
 class HabitController:
@@ -13,15 +17,18 @@ class HabitController:
         return CreateHabit(cls.repo).execute(name, description, frequency)
 
     @classmethod
-    def delete_habit(cls):
+    def delete_habit(cls, habit_id: int):
+        return DeleteHabit(cls.repo).execute(habit_id)
         pass
 
     @classmethod
-    def get_habit(cls):
+    def get_habit(cls, habit_id: int):
+        return GetHabit(cls.repo).execute(habit_id)
         pass
 
     @classmethod
     def list_habits(cls):
+        return ListHabits(cls.repo).execute()
         pass
 
     @classmethod
@@ -45,8 +52,5 @@ class HabitController:
 
     @classmethod
     def get_daily_progress_habits(cls):
-        pass
-
-    @classmethod
-    def get_habit_progress(cls):
+        return HabitProgress(cls.repo).execute()
         pass

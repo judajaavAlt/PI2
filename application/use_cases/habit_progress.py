@@ -1,29 +1,55 @@
 from domain.repositories.habit_repository import HabitRepository
-from datetime import datetime
+from infraestructure.persistence.time import TimeManager
 
 
 class HabitProgress:
     def __init__(self, repository: HabitRepository) -> None:
         self.repository = repository
 
-    def daily_progress(self) -> float:
+    def execute(self) -> dict:
         """
-        Calcula el progreso diario en porcentaje.
-        - Se toman todos los hábitos que corresponden al día actual.
-        - Se calcula el porcentaje de los que han sido completados.
-        Devuelve un valor entre 0.0 y 100.0
+        Calcula el progreso de los hábitos para el día actual.
+        Retorna un diccionario con total, completados, pendientes y porcentaje.
         """
+        # Mapear de inglés a español porque tu Frequency usa español
+        day_map = {
+            "monday": "lunes",
+            "tuesday": "martes",
+            "wednesday": "miercoles",
+            "thursday": "jueves",
+            "friday": "viernes",
+            "saturday": "sabado",
+            "sunday": "domingo",
+        }
 
-        today = datetime.now().strftime("%A").lower()  # ejemplo: "monday"
+        today_en = TimeManager.today()  # ej. "monday"
+        today_es = day_map[today_en]    # ej. "lunes"
+
+        # Traer todos los hábitos
         habits = self.repository.get_all_habits()
 
-        # Filtrar los hábitos que aplican para el día de hoy
-        today_habits = [h for h in habits if today in h.frequency.value]
+        # Filtrar hábitos activos para hoy
+        todays_habits = [h for h in habits if h.frequency.is_active(today_es)]
 
-        if not today_habits:  # Si no hay hábitos para hoy, el progreso es 0
-            return 0.0
+        if not todays_habits:
+            return {
+                "day": today_es,
+                "total": 0,
+                "completed": 0,
+                "pending": 0,
+                "progress": 0.0,
+            }
 
-        completed = sum(1 for h in today_habits if h.is_completed)
-        progress = (completed / len(today_habits)) * 100
+        # Contar completados
+        completed = sum(1 for h in todays_habits if h.is_completed)
+        total = len(todays_habits)
+        pending = total - completed
+        progress = (completed / total) * 100
 
-        return round(progress, 2)
+        return {
+            "day": today_es,
+            "total": total,
+            "completed": completed,
+            "pending": pending,
+            "progress": progress,
+        }
