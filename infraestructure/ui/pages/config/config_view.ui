@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="imageLabel">
    <property name="geometry">
     <rect>
      <x>236</x>
@@ -53,7 +53,7 @@
     <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QToolButton" name="toolButton">
+  <widget class="QToolButton" name="loadImageButton">
    <property name="geometry">
     <rect>
      <x>212</x>
@@ -79,7 +79,7 @@
     <string>Nombre</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="nameLineEdit">
    <property name="geometry">
     <rect>
      <x>106</x>
@@ -89,7 +89,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="cancelButton">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -111,7 +111,7 @@ QPushButton#cancelButton {
     <string>✖️Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="saveButton">
    <property name="geometry">
     <rect>
      <x>110</x>
