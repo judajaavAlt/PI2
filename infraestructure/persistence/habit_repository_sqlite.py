@@ -140,7 +140,6 @@ class HabitSqliteRepository(HabitRepository):
             cursor.execute("""
                 SELECT habit_id, name, description, frequency, is_completed, streak
                 FROM habits
-                WHERE is_completed = 1
             """)
             rows = cursor.fetchall()
 
