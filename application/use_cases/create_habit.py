@@ -9,8 +9,8 @@ class CreateHabit:
     def __init__(self, repository: HabitRepository) -> None:
         self.repository = repository
 
-    def execute(self, name: str, description: str, frequency: Frequency):
+    def execute(self, name: str, description: str, frequency: list):
         habit = Habit(Name(name),
                       Description(description),
                       frequency=Frequency(frequency))
-        return self.repository.create_habit(habit)
+        return self.repository.create_habit(habit).habit_id

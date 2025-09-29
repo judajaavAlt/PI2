@@ -66,19 +66,16 @@ class Habit:
     def modify(self, name=None, description=None, frequency=None,
                is_completed=None, streak=None):
         if name:
-            check_type("name", name, Name)
-            self.name = name
+            self.name = Name(name)
         if description:
-            check_type("description", description, Description)
-            self.description = description
+
+            self.description = Description(description)
         if frequency:
-            check_type("frequency", frequency, Frequency)
-            self.frequency = frequency
+            self.frequency = Frequency(frequency)
 
         if is_completed is not None:
             check_type("is_completed", is_completed, bool)
             self.is_completed = is_completed
 
         if streak is not None:
-            check_type("streak", streak, Streak)
-            self.streak = streak
+            self.streak = Streak(streak)

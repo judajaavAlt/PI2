@@ -2,12 +2,6 @@ import sqlite3
 from domain.repositories.habit_repository import HabitRepository
 from infraestructure.persistence.paths import paths
 
-# Value Objects
-from domain.value_objects.name import Name
-from domain.value_objects.description import Description
-from domain.value_objects.frequency import Frequency
-from domain.value_objects.streak import Streak
-
 from domain.entities.habit import Habit
 from application.dto.habit_dto import HabitDto
 from domain.utils.checks import check_type

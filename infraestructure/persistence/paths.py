@@ -23,3 +23,9 @@ class paths:
     @classmethod
     def get_db_path(cls):
         return os.path.join(cls.get_data_dir(), 'database.sqlite')
+
+    @classmethod
+    def get_user_data_path(cls):
+        return os.path.join(cls.get_data_dir(), 'userPreferences.json')
+    
+    
