@@ -1,3 +1,3 @@
-from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from application.controllers.update_controller import UpdateController
 
-uses = HabitSqliteRepository()
+UpdateController.start()
