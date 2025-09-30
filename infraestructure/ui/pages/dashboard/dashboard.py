@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QLabel, QProgressBar
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
+from application.controllers.habit_controller import HabitController
 import os
 
 
@@ -13,14 +14,37 @@ def generate_ui_file_path(file: str):
 class DashboardPage:
     def __init__(self):
         self.load_ui_file()
+        self.controller = HabitController()
 
-        dummy_todays_percentage = 40
-        dummy_streak_percentage = 80
+        self.set_progresses()
 
-        self.set_progresses(dummy_todays_percentage, dummy_streak_percentage)
+    def set_progresses(self):
+        habits_progress = self.controller.get_daily_progress_habits()
+        todays_percentage = habits_progress["progress"]
+        total_todays_habits = habits_progress["total"]
+        completed_todays_habits = habits_progress["completed"]
 
-    def set_progresses(self, todays_percentage: int, streak_percentage: int):
-        # Set labels
+        total_streak_habits = 1
+        streak_percentage = total_todays_habits / total_todays_habits
+
+        # Set labels text
+        label_banner_text: QLabel = self.window.findChild(
+            QLabel, "bannerSubtext")
+        today_progress_text: QLabel = self.window.findChild(
+            QLabel, "todayProgressText")
+        streak_progress_text: QLabel = self.window.findChild(
+            QLabel, "streakProgressText")
+        label_banner_text.setText(
+            f'Has completado {completed_todays_habits} '
+            f'de {total_todays_habits} '
+            'hábitos ¡Sigue así!'
+        )
+        today_progress_text.setText(
+            f'{completed_todays_habits} de {total_todays_habits} completados')
+        streak_progress_text.setText(
+            f'{total_streak_habits} de {total_todays_habits} con racha activa')
+
+        # Set labels percentage
         label_main_percentage: QLabel = self.window.findChild(
             QLabel, "bannerPercentage")
         label_todays_percentage: QLabel = self.window.findChild(
@@ -28,9 +52,9 @@ class DashboardPage:
         label_streak_percentage: QLabel = self.window.findChild(
             QLabel, "percentage_2"
         )
-        label_main_percentage.setText(str(todays_percentage))
-        label_todays_percentage.setText(str(todays_percentage))
-        label_streak_percentage.setText(str(streak_percentage))
+        label_main_percentage.setText(str(todays_percentage*100)+"%")
+        label_todays_percentage.setText(str(todays_percentage*100)+"%")
+        label_streak_percentage.setText(str(streak_percentage*100)+"%")
 
         # Set progress bars
         progress_bar_today: QProgressBar = self.window.findChild(
@@ -39,8 +63,8 @@ class DashboardPage:
         progress_bar_streak: QProgressBar = self.window.findChild(
             QProgressBar, "progress_bar_streak"
         )
-        progress_bar_today.setValue(todays_percentage)
-        progress_bar_streak.setValue(streak_percentage)
+        progress_bar_today.setValue(todays_percentage*100)
+        progress_bar_streak.setValue(streak_percentage*100)
 
     def load_ui_file(self):
         loader = QUiLoader()
