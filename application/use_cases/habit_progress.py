@@ -52,4 +52,7 @@ class HabitProgress:
             "completed": completed,
             "pending": pending,
             "progress": progress,
+            "total_habits": 6,  # Cantidad habitos en total en toda la app
+            "total_streak": 2,  # Cantidad habitos en total de toda la app que tienen racha
+            "progress_streak": 40,  # Porcentaje de hábitos con racha en toda la app sobre la cantidad de hábitos en total en toda la app: (habitos_total_conracha / habitos_total)
         }

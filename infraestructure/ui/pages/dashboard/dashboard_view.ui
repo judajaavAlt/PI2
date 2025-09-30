@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>427</height>
+    <width>651</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
 /* Estilos generales */
 QWidget {
 	font-family: 'Segoe UI', Arial, sans-serif;
-	background-color: #f8f9fa;
+	background-color: lightgray;
 }
 
 /* 1. Estilo para el Banner Superior (Great progress today...) */
@@ -394,6 +394,45 @@ QProgressBar::chunk {
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="habitsDashboard" native="true">
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+	background-color: white;
+}
+
+QWidget#habitsDashboard {
+	border-radius: 8px;
+}
+
+</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_todays_title">
+        <property name="styleSheet">
+         <string notr="true">color: black;
+font-size: 15px;
+font-weight: bold;	</string>
+        </property>
+        <property name="text">
+         <string>Tus hábitos de hoy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="habitsContainer" native="true"/>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer_3">
