@@ -73,7 +73,9 @@ class MainWindow:
 
     def change_page(self, index: int, props: dict = None):
         match index:
-            case 0: self.change_header_content_title("Dashboard")
+            case 0:
+                self.change_header_content_title("Dashboard")
+                self.dashboard_page.update_widgets()
             case 1: self.change_header_content_title("Hábitos")
             case 2: self.change_header_content_title("Configuración")
             case 3:
