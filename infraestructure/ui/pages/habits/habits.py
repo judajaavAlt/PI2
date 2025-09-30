@@ -1,66 +1,46 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QHBoxLayout
-from PySide6.QtGui import QColor, QPalette
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtCore import QFile
+import os
 
-# Repositorio y casos de uso (igual que tu ejemplo)
-from application.use_cases.list_habits import ListHabits
-from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from infraestructure.ui.pages.habits.habits_list import HabitsListWidget  # Tu widget personalizado
 
 
-class HabitItemWidget(QWidget):
+def generate_ui_file_path(file: str):
+    """Genera la ruta completa a un archivo .ui"""
+    base_dir = os.path.dirname(__file__)
+    return os.path.join(base_dir, file)
+
+
+class HabitsPage:
     """
-    Widget que representa un hábito en la lista, con nombre, id y color.
+    Página de hábitos que carga su UI desde .ui y agrega el HabitsListWidget
+    dentro del contenedor especificado.
     """
-    def __init__(self, habit, parent=None):
-        super().__init__(parent)
-        self.habit = habit
 
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(5, 5, 5, 5)
+    def __init__(self):
+        loader = QUiLoader()
+        ui_path = generate_ui_file_path("habits_view.ui")
+        ui_file = QFile(ui_path)
+        if not ui_file.open(QFile.ReadOnly):
+            raise RuntimeError(f"No se pudo abrir el archivo UI en: {ui_path}")
 
-        # Color identificador
-        color_label = QLabel()
-        color_label.setFixedSize(20, 20)
-        color_label.setStyleSheet(f"background-color: {habit.color}; border-radius: 10px;")
-        layout.addWidget(color_label)
+        # Cargar UI
+        self.window = loader.load(ui_file)
+        ui_file.close()
 
-        # Nombre del hábito
-        name_label = QLabel(f"{habit.name.value} (ID: {habit.habit_id})")
-        layout.addWidget(name_label)
+        # Encontrar el contenedor donde se insertará la lista
+        container = self.window.findChild(QWidget, "habits_list_container")
+        if container is None:
+            raise RuntimeError("No se encontró un contenedor llamado 'habits_list_container' en el .ui")
 
-        layout.addStretch()
+        # Crear layout si no existe
+        layout = container.layout()
+        if layout is None:
+            layout = QVBoxLayout(container)
 
+        # Agregar el widget de la lista de hábitos
+        self.habits_list_widget = HabitsListWidget()
+        layout.addWidget(self.habits_list_widget)
 
-class HabitsListWidget(QWidget):
-    """
-    Widget que muestra la lista de hábitos en un QListWidget.
-    """
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.repo = HabitSqliteRepository()
-        self.list_habits_uc = ListHabits(self.repo)
-
-        main_layout = QVBoxLayout(self)
-
-        # Lista de hábitos
-        self.list_widget = QListWidget()
-        main_layout.addWidget(self.list_widget)
-
-        self.load_habits()
-
-    def load_habits(self):
-        """Carga y muestra todos los hábitos."""
-        habits = self.list_habits_uc.execute()
-
-        if not habits:
-            self.list_widget.addItem("⚠️ No hay hábitos registrados.")
-            return
-
-        for habit in habits:
-            item_widget = HabitItemWidget(habit)
-            list_item = QListWidgetItem()
-            list_item.setSizeHint(item_widget.sizeHint())
-
-            self.list_widget.addItem(list_item)
-            self.list_widget.setItemWidget(list_item, item_widget)
 

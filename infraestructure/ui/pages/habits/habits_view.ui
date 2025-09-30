@@ -26,7 +26,7 @@
     <string>Mostrando hábitossss</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="componentListHabits">
+  <widget class="QListWidget" name="habits_list_container">
    <property name="geometry">
     <rect>
      <x>20</x>
