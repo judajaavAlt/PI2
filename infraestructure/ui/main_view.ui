@@ -208,13 +208,6 @@ QLabel {
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="edit_button">
-               <property name="text">
-                <string>editar</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="btn_header_content">
                <property name="styleSheet">
                 <string notr="true">QPushButton {

@@ -39,23 +39,13 @@ class MainWindow:
         self.main_stacked_widget = self.window.findChild(
             QStackedWidget, "main_stacked_widget"
         )
-        self.edit_button = self.window.findChild(
-            QPushButton, "edit_button"
-        )
 
         # Connect buttons with a single function
         self.btn_sidebar_1.clicked.connect(lambda: self.change_page(0))
         self.btn_sidebar_2.clicked.connect(lambda: self.change_page(1))
         self.btn_sidebar_3.clicked.connect(lambda: self.change_page(2))
-        props = {
-            "id": 1,
-            "name": "Esto es un hábito",
-            "description": "Esta es una descripción",
-            "frequency": "Lunes, Martes, Jueves",
-        }
         self.btn_header_content.clicked.connect(
-            lambda: self.change_page(4, props))
-        self.edit_button.clicked.connect(lambda: self.change_page(3, props))
+            lambda: self.change_page(4))
 
         self.load_pages()
 
@@ -72,8 +62,8 @@ class MainWindow:
         self.dashboard_page = DashboardPage()
         self.habits_page = HabitsPage()
         self.config_page = ConfigPage()
-        self.habits_detail_page = HabitDetailPage()
-        self.habits_form_page = HabitFormPage()
+        self.habits_detail_page = HabitDetailPage(main_window=self)
+        self.habits_form_page = HabitFormPage(main_window=self)
 
         self.main_stacked_widget.addWidget(self.dashboard_page.window)
         self.main_stacked_widget.addWidget(self.habits_page.window)

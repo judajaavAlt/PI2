@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>609</width>
-    <height>618</height>
+    <width>605</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,7 +94,7 @@ QPushButton {
 }</string>
         </property>
         <property name="text">
-         <string>Nombre</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -130,7 +130,7 @@ QPushButton {
 }</string>
         </property>
         <property name="plainText">
-         <string>Descripción</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -170,14 +170,14 @@ QWidget {
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="1" column="3">
-       <widget class="QCheckBox" name="checkBox_8">
+       <widget class="QCheckBox" name="checkBox_4">
         <property name="text">
          <string>Jueves</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QCheckBox" name="checkBox_9">
+       <widget class="QCheckBox" name="checkBox_7">
         <property name="text">
          <string>Domingo</string>
         </property>
@@ -196,7 +196,7 @@ QWidget {
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QCheckBox" name="checkBox_10">
+       <widget class="QCheckBox" name="checkBox_3">
         <property name="text">
          <string>Miércoles</string>
         </property>
@@ -206,28 +206,28 @@ QWidget {
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QCheckBox" name="checkBox_11">
+       <widget class="QCheckBox" name="checkBox_5">
         <property name="text">
          <string>Viernes</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QCheckBox" name="checkBox_12">
+       <widget class="QCheckBox" name="checkBox_6">
         <property name="text">
          <string>Sábado</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QCheckBox" name="checkBox_13">
+       <widget class="QCheckBox" name="checkBox_2">
         <property name="text">
          <string>Martes</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QCheckBox" name="checkBox_14">
+       <widget class="QCheckBox" name="checkBox_1">
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -262,6 +262,9 @@ QWidget {
       </item>
       <item>
        <widget class="QPushButton" name="btn_cancel">
+        <property name="styleSheet">
+         <string notr="true">background-color: lightgray;</string>
+        </property>
         <property name="text">
          <string>Cancelar</string>
         </property>

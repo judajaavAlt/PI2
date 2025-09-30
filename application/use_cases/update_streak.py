@@ -8,7 +8,7 @@ class UpdateStreak:
 
     def execute(self, habit: Habit, keep_streak: bool):
         if keep_streak:
-            habit.modify(streak=habit.streak.increase())
+            habit.modify(streak=habit.streak.increase().value)
         else:
             habit.modify(streak=habit.streak.reset())
 
