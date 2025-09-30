@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>576</height>
+    <width>780</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -265,7 +265,7 @@ QProgressBar::chunk {
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="progressText">
+         <widget class="QLabel" name="todayProgressText">
           <property name="styleSheet">
            <string notr="true">background-color: white</string>
           </property>
@@ -368,7 +368,7 @@ QProgressBar::chunk {
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="progressText">
+         <widget class="QLabel" name="streakProgressText">
           <property name="styleSheet">
            <string notr="true">background-color: white</string>
           </property>
