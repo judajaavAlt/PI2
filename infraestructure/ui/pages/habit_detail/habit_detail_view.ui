@@ -168,7 +168,7 @@ font-size: 20px;</string>
       <string notr="true">margin-top: 0;</string>
      </property>
      <property name="text">
-      <string>Un texto</string>
+      <string>Aquí puedes ver el detalle de un hábito, puedes editarlo o eliminarlo</string>
      </property>
     </widget>
    </item>

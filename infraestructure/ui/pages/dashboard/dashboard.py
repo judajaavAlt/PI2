@@ -38,9 +38,9 @@ class DashboardPage (QWidget):
         total_todays_habits = habits_progress["total"]
         completed_todays_habits = habits_progress["completed"]
 
-        total_habits = habits_progress["total_habits"]
-        total_streak_habits = habits_progress["total_streak"]
-        streak_percentage = habits_progress["progress_streak"]
+        total_habits = 8  # habits_progress["total_habits"]
+        total_streak_habits = 3  # habits_progress["total_streak"]
+        streak_percentage = 0.8  # habits_progress["progress_streak"]
 
         # Set labels text
         label_banner_text: QLabel = self.window.findChild(
