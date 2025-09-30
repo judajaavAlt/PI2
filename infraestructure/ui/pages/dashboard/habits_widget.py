@@ -1,62 +1,55 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QLabel, QScrollArea
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QCheckBox
 from application.use_cases.list_habits import ListHabits
-from application.use_cases.mark_habits_done import SwitchHabitState
+from application.use_cases.update_habit import UpdateHabit
 from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
 
+
 class HabitsWidget(QWidget):
+    """
+    Widget que muestra directamente la lista de hábitos del día en un scroll.
+    """
+
     def __init__(self, parent=None):
         super().__init__(parent)
-
-        # Layout principal con scroll
-        layout = QVBoxLayout(self)
-
-        self.scroll_area = QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
-
-        self.content = QWidget()
-        self.content_layout = QVBoxLayout(self.content)
-        self.scroll_area.setWidget(self.content)
-
-        layout.addWidget(self.scroll_area)
 
         # Repositorio y casos de uso
         self.repo = HabitSqliteRepository()
         self.list_habits_uc = ListHabits(self.repo)
-        self.switch_habit_uc = SwitchHabitState(self.repo)
+        self.update_habit_uc = UpdateHabit(self.repo)
+
+        # Layout principal
+        main_layout = QVBoxLayout(self)
+
+        # Scroll con contenido
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll_content = QWidget()
+        self.scroll_layout = QVBoxLayout(scroll_content)
+
+        scroll.setWidget(scroll_content)
+        main_layout.addWidget(scroll)
 
         # Cargar hábitos
         self.load_habits()
 
     def load_habits(self):
-        # Limpiar contenido anterior
-        while self.content_layout.count():
-            child = self.content_layout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
-
-        # Obtener hábitos
+        """Carga y muestra los hábitos del día."""
         habits = self.list_habits_uc.execute()
-        print(f"Habits loaded: {habits}")  # Para debug
 
-        # Ordenar: completados primero
-        habits_sorted = sorted(habits, key=lambda h: not h.is_completed)
+        if not habits:
+            self.scroll_layout.addWidget(QLabel("⚠️ No hay hábitos para hoy."))
+            return
 
-        # Renderizar cada hábito
-        for habit in habits_sorted:
-            row = QWidget()
-            row_layout = QHBoxLayout(row)
+        for habit in habits:
+            # Filtrar solo los del día
+            if habit.frequency.is_today():
+                checkbox = QCheckBox(habit.name.value)
+                checkbox.setChecked(habit.is_completed)
+                checkbox.stateChanged.connect(lambda state, h=habit: self.update_habit(h))
+                self.scroll_layout.addWidget(checkbox)
 
-            # Checkbox a la izquierda
-            checkbox = QCheckBox()
-            checkbox.setChecked(habit.is_completed)
-            checkbox.stateChanged.connect(lambda state, h=habit: self.switch_habit_uc.execute(h, state))
-            row_layout.addWidget(checkbox)
+        self.scroll_layout.addStretch()
 
-            # Texto del hábito a la derecha
-            label = QLabel(habit.name.value)  # <-- Asegúrate de usar .value
-            row_layout.addWidget(label)
-
-            self.content_layout.addWidget(row)
-
-        # Empujar elementos hacia arriba
-        self.content_layout.addStretch()
+    def update_habit(self, habit):
+        """Actualiza el hábito cuando se cambia el estado."""
+        self.update_habit_uc.execute(habit)
