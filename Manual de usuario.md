@@ -15,18 +15,18 @@ Esta aplicación de gestión de hábitos te ayuda a crear, seguir y mejorar tus 
 1. Descarga el proyecto desde GitHub.
 2. Abre la carpeta del proyecto en tu computadora.
 3. Instala las dependencias necesarias:
-   - Abre una terminal y ejecuta:
-     ```powershell
-     pip install -r requirements.txt
-     ```
+  - Abre una terminal y ejecuta:
+    ```powershell
+    pip install -r requirements.txt
+    ```
 
 ## Ejecución
 
 1. Abre una terminal en la carpeta del proyecto.
 2. Ejecuta el siguiente comando:
-   ```powershell
-   python main.py
-   ```
+  ```powershell
+  python main.py
+  ```
 3. Se abrirá la ventana principal de la aplicación.
 
 ## Uso básico
