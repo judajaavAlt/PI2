@@ -1,14 +1,18 @@
 # ui/config_page.py
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile
+from PySide6.QtCore import QFile, Qt
+from PySide6.QtWidgets import QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton
+from PySide6.QtGui import QPixmap
 import os
 
 from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository
 from application.use_cases.update_profile_use_case import UpdateProfileUseCase
 
+
 def generate_ui_file_path(file: str):
     base_dir = os.path.dirname(__file__)
     return os.path.join(base_dir, file)
+
 
 class ConfigPage:
     def __init__(self):

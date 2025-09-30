@@ -10,11 +10,8 @@
     <height>427</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>600</width>
-    <height>400</height>
-   </size>
+  <property name="windowTitle">
+   <string>Form</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -109,220 +106,46 @@ QPushButton#cancelButton {
     padding: 6px 12px;
     border-radius: 6px;
 }</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>20</number>
    </property>
-   <property name="leftMargin">
-    <number>40</number>
+   <property name="text">
+    <string>✖️Cancel</string>
    </property>
-   <property name="topMargin">
-    <number>30</number>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>220</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
    </property>
-   <property name="rightMargin">
-    <number>40</number>
-   </property>
-   <property name="bottomMargin">
-    <number>30</number>
-   </property>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="imageLabel">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>120</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>120</width>
-         <height>120</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel#imageLabel {
-    border-radius: 60px;
-    border: 2px solid #ccc;
-    background-color: #f0f0f0;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QToolButton" name="loadImageButton">
-       <property name="styleSheet">
-        <string notr="true">QToolButton {
-    background-color: transparent;
-    color: #007BFF;
-    border: none;
-    padding: 8px;
-    font-size: 14px;
-}
-
-QToolButton:hover {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-}</string>
-       </property>
-       <property name="text">
-        <string>↥ Cargar una imagen nueva</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_3">
-     <property name="styleSheet">
-      <string notr="true">QLabel {
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-     </property>
-     <property name="text">
-      <string>Nombre</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="nameLineEdit">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLineEdit {
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 14px;
-}
-
-QLineEdit:focus {
-    border-color: #007BFF;
-    outline: none;
-}</string>
-     </property>
-     <property name="placeholderText">
-      <string>Ingresa tu nombre</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>15</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="saveButton">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton#saveButton {
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
     background-color: #007BFF;
     color: white;
-    padding: 10px 20px;
+    padding: 6px 12px;
     border-radius: 6px;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
+
+}</string>
+   </property>
+   <property name="text">
+    <string>✔️Save changes</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>182</x>
+     <y>260</y>
+     <width>209</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel#statusLabel {
+    color: gray;
+    font-size: 11px;
 }
 </string>
    </property>
