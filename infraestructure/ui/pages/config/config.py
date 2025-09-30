@@ -8,9 +8,11 @@ import os
 from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository
 from application.use_cases.update_profile_use_case import UpdateProfileUseCase
 
+
 def generate_ui_file_path(file: str):
     base_dir = os.path.dirname(__file__)
     return os.path.join(base_dir, file)
+
 
 class ConfigPage:
     def __init__(self):
