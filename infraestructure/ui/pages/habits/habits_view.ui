@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>603</width>
     <height>300</height>
    </rect>
   </property>
@@ -23,7 +23,17 @@
     </rect>
    </property>
    <property name="text">
-    <string>Mostrando hábitos</string>
+    <string>Mostrando hábitossss</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="componentListHabits">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>40</y>
+     <width>256</width>
+     <height>192</height>
+    </rect>
    </property>
   </widget>
  </widget>
