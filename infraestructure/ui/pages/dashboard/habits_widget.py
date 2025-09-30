@@ -1,7 +1,7 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QCheckBox, QLabel
-from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QLabel, QScrollArea
 from application.use_cases.list_habits import ListHabits
 from application.use_cases.mark_habits_done import SwitchHabitState
+from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
 
 class HabitsWidget(QWidget):
     def __init__(self, parent=None):
@@ -36,31 +36,27 @@ class HabitsWidget(QWidget):
 
         # Obtener hábitos
         habits = self.list_habits_uc.execute()
-        print("Habits loaded:", habits)  # Para debug
+        print(f"Habits loaded: {habits}")  # Para debug
 
         # Ordenar: completados primero
         habits_sorted = sorted(habits, key=lambda h: not h.is_completed)
 
-        # Crear filas: checkbox a la izquierda, texto a la derecha
+        # Renderizar cada hábito
         for habit in habits_sorted:
-            row_widget = QWidget()
-            row_layout = QHBoxLayout(row_widget)
-            
-            # Checkbox
+            row = QWidget()
+            row_layout = QHBoxLayout(row)
+
+            # Checkbox a la izquierda
             checkbox = QCheckBox()
             checkbox.setChecked(habit.is_completed)
             checkbox.stateChanged.connect(lambda state, h=habit: self.switch_habit_uc.execute(h, state))
             row_layout.addWidget(checkbox)
-            
-            # Texto del hábito
-            label = QLabel(habit.name)
+
+            # Texto del hábito a la derecha
+            label = QLabel(habit.name.value)  # <-- Asegúrate de usar .value
             row_layout.addWidget(label)
 
-            # Alineación y estiramiento
-            row_layout.addStretch()
-            
-            # Añadir fila al layout principal
-            self.content_layout.addWidget(row_widget)
+            self.content_layout.addWidget(row)
 
-        # Empujar todo hacia arriba
+        # Empujar elementos hacia arriba
         self.content_layout.addStretch()
