@@ -6,26 +6,409 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>780</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dashboard</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>131</width>
-     <height>16</height>
-    </rect>
+  <property name="styleSheet">
+   <string notr="true">
+   
+/* Estilos generales */
+QWidget {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	background-color: #f8f9fa;
+}
+
+/* 1. Estilo para el Banner Superior (Great progress today...) */
+QFrame#mainProgressBanner {
+	background-color: #4A90E2; /* Azul del banner */
+	border-radius: 8px;
+	padding: 15px;
+}
+
+/* Selector CORREGIDO: Solo aplicamos blanco a los QLabels específicos del banner */
+QFrame#mainProgressBanner &gt; QHBoxLayout &gt; QVBoxLayout QLabel {
+    color: white;
+}
+
+/* Estilos de fuente específicos */
+QLabel#bannerGreeting {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+QLabel#bannerSubtext {
+	font-size: 14px;
+}
+
+QLabel#bannerPercentage {
+	font-size: 40px;
+	font-weight: 300;
+}
+
+/* 2. Contenedores de tarjetas de progreso */
+QFrame#progressCard {
+	background-color: white;
+	border-radius: 8px; /* Ligeramente más pequeño */
+	border: 1px solid #e0e0e0;
+	padding: 15px;
+	margin-top: 10px; /* Separación de las tarjetas del banner */
+}
+
+QLabel#cardTitle {
+	font-size: 16px;
+	font-weight: bold;
+	color: #2c3e50;
+	margin-bottom: 5px;
+}
+
+QLabel#progressText {
+	font-size: 13px;
+	color: #7f8c8d;
+	margin-top: 5px;
+}
+
+QLabel#percentage {
+	font-size: 14px; /* Más pequeño para las tarjetas */
+	font-weight: bold;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="spacing">
+    <number>20</number>
    </property>
-   <property name="text">
-    <string>Mostrando dashboard</string>
+   <property name="leftMargin">
+    <number>30</number>
    </property>
-  </widget>
+   <property name="topMargin">
+    <number>30</number>
+   </property>
+   <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <property name="bottomMargin">
+    <number>30</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="mainProgressBanner">
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="bannerLayout">
+      <item>
+       <layout class="QVBoxLayout" name="bannerTextLayout">
+        <item>
+         <widget class="QLabel" name="bannerGreeting">
+          <property name="styleSheet">
+           <string notr="true">color: white;           /* Texto blanco */
+background-color: #4A90E2;  /* Fondo azul #4A90E2 */</string>
+          </property>
+          <property name="text">
+           <string>Increíble progreso el día de hoy Sarah Johnson!</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bannerSubtext">
+          <property name="styleSheet">
+           <string notr="true">color: white;           /* Texto blanco */
+background-color: #4A90E2;  /* Fondo azul #4A90E2 */</string>
+          </property>
+          <property name="text">
+           <string>Has completado 2 de 4 hábitos. ¡Sigue así!</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="bannerPercentageLayout">
+        <item>
+         <widget class="QLabel" name="bannerPercentage">
+          <property name="styleSheet">
+           <string notr="true">color: white;           /* Texto blanco */
+background-color: #4A90E2;  /* Fondo azul #4A90E2 */</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:30pt; font-weight:700;&quot;&gt;50%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bannerTodayText">
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: white;           /* Texto blanco */
+background-color: #4A90E2;  /* Fondo azul #4A90E2 */</string>
+          </property>
+          <property name="text">
+           <string>Progreso de hoy</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="progressLayout">
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="progressCard">
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="dailyTitleLayout">
+          <item>
+           <widget class="QLabel" name="cardTitle">
+            <property name="styleSheet">
+             <string notr="true">background-color: white</string>
+            </property>
+            <property name="text">
+             <string>Progreso Diario</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentage">
+            <property name="styleSheet">
+             <string notr="true">color: #4A90E2;
+background-color: white</string>
+            </property>
+            <property name="text">
+             <string>50%</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="progressText">
+          <property name="styleSheet">
+           <string notr="true">
+background-color: white</string>
+          </property>
+          <property name="text">
+           <string>Hábitos de hoy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="progress_bar_today">
+          <property name="styleSheet">
+           <string notr="true">QProgressBar {
+	border-radius: 10px;
+	background: lightgray;  /* Color de fondo de la barra */
+}
+QProgressBar::chunk {
+	background: #4A90E2; /* Color de la parte llena de la barra */
+	border-radius: 10px;
+}</string>
+          </property>
+          <property name="value">
+           <number>80</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="todayProgressText">
+          <property name="styleSheet">
+           <string notr="true">background-color: white</string>
+          </property>
+          <property name="text">
+           <string>2 de 4 hábitos completados</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="progressCard">
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="streakProgressLayout">
+        <item>
+         <layout class="QHBoxLayout" name="streakTitleLayout">
+          <item>
+           <widget class="QLabel" name="cardTitle">
+            <property name="styleSheet">
+             <string notr="true">background-color: white</string>
+            </property>
+            <property name="text">
+             <string>Progreso de la racha</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="percentage_2">
+            <property name="styleSheet">
+             <string notr="true">color: #7ED321;
+background-color: white</string>
+            </property>
+            <property name="text">
+             <string>88%</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="progressText">
+          <property name="styleSheet">
+           <string notr="true">background-color: white</string>
+          </property>
+          <property name="text">
+           <string>Racha activa</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="progress_bar_streak">
+          <property name="styleSheet">
+           <string notr="true">QProgressBar {
+	border-radius: 10px;
+	background: lightgray;  /* Color de fondo de la barra */
+}
+QProgressBar::chunk {
+	background: #7ED321; /* Color de la parte llena de la barra */
+	border-radius: 10px;
+}</string>
+          </property>
+          <property name="value">
+           <number>80</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="streakProgressText">
+          <property name="styleSheet">
+           <string notr="true">background-color: white</string>
+          </property>
+          <property name="text">
+           <string>7 de 8 hábitos con racha activa</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

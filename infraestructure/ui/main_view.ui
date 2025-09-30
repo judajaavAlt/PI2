@@ -209,8 +209,23 @@ QLabel {
              </item>
              <item>
               <widget class="QPushButton" name="btn_header_content">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #3498db;
+    color: white;
+    font-size: 12px;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+QPushButton:hover {
+    background-color: #2980b9;
+}
+QPushButton:pressed {
+    background-color: #1f618d;
+}</string>
+               </property>
                <property name="text">
-                <string>Un boton</string>
+                <string>Añadir hábito</string>
                </property>
               </widget>
              </item>
