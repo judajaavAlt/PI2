@@ -19,6 +19,22 @@ class HabitsWidget(QWidget):
 
         # Layout principal
         main_layout = QVBoxLayout(self)
+        self.setStyleSheet("""
+            QCheckBox {
+                color: black;
+            }
+            QCheckBox::indicator {
+                width: 18px;
+                height: 18px;
+                border: 2px solid #0078d7;
+                border-radius: 3px;
+                background: white;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #0078d7;
+                border: 2px solid #0078d7;
+            }
+        """)
 
         # Scroll con contenido
         scroll = QScrollArea()
