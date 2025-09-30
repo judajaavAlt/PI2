@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>788</width>
+    <height>576</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,28 +74,6 @@ QLabel#progressText {
 QLabel#percentage {
 	font-size: 14px; /* Más pequeño para las tarjetas */
 	font-weight: bold;
-}
-
-/* 3. Barras de progreso personalizadas */
-QFrame#progressBarBackground {
-	background-color: #ecf0f1;
-	border-radius: 10px;
-	border: none;
-	height: 20px;
-}
-
-/* Color para la barra de progreso DIARIO (Azul) */
-QFrame#dailyProgressBarFill {
-	background-color: #4A90E2; /* Azul fuerte para el 50% */
-	border-radius: 10px;
-	border: none;
-}
-
-/* Color para la barra de progreso de RACHA (Verde) */
-QFrame#streakProgressBarFill {
-	background-color: #7ED321; /* Verde de la imagen 2 */
-	border-radius: 10px;
-	border: none;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
@@ -216,7 +194,7 @@ background-color: #4A90E2;  /* Fondo azul #4A90E2 */</string>
        <property name="frameShadow">
         <enum>QFrame::Shadow::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="dailyProgressLayout">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QHBoxLayout" name="dailyTitleLayout">
           <item>
@@ -267,71 +245,23 @@ background-color: white</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="progressBarBackground">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
+         <widget class="QProgressBar" name="progress_bar_today">
+          <property name="styleSheet">
+           <string notr="true">QProgressBar {
+	border-radius: 10px;
+	background: lightgray;  /* Color de fondo de la barra */
+}
+QProgressBar::chunk {
+	background: #4A90E2; /* Color de la parte llena de la barra */
+	border-radius: 10px;
+}</string>
           </property>
-          <layout class="QHBoxLayout" name="dailyProgressBarLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="dailyProgressBarFill">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>1</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Shape::NoFrame</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="dailyProgressBarSpacer">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+          <property name="value">
+           <number>80</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -395,7 +325,7 @@ background-color: white</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="percentage">
+           <widget class="QLabel" name="percentage_2">
             <property name="styleSheet">
              <string notr="true">color: #7ED321;
 background-color: white</string>
@@ -418,71 +348,23 @@ background-color: white</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="progressBarBackground">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
+         <widget class="QProgressBar" name="progress_bar_streak">
+          <property name="styleSheet">
+           <string notr="true">QProgressBar {
+	border-radius: 10px;
+	background: lightgray;  /* Color de fondo de la barra */
+}
+QProgressBar::chunk {
+	background: #7ED321; /* Color de la parte llena de la barra */
+	border-radius: 10px;
+}</string>
           </property>
-          <layout class="QHBoxLayout" name="streakProgressBarLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="streakProgressBarFill">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>88</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::Shape::NoFrame</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="streakProgressBarSpacer">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+          <property name="value">
+           <number>80</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
