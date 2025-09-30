@@ -1,8 +1,6 @@
 # ui/config_page.py
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile, Qt
-from PySide6.QtWidgets import QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton
-from PySide6.QtGui import QPixmap
+from PySide6.QtCore import QFile
 import os
 
 from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>573</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -16,13 +16,98 @@
     <height>400</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>Configuración</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QWidget {
-    background-color: white;
-    font-family: Arial, sans-serif;
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>236</x>
+     <y>10</y>
+     <width>101</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    border-radius: 50px; /* ajustar al tamaño */
+    border: 2px solid #ccc;
+    background-color: #e0e0e0;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>73</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="toolButton">
+   <property name="geometry">
+    <rect>
+     <x>212</x>
+     <y>110</y>
+     <width>149</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cargar una imagen nueva</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>140</y>
+     <width>44</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nombre</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>106</x>
+     <y>160</y>
+     <width>361</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>220</y>
+     <width>171</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton#cancelButton {
+    background-color: #E0E0E0;
+    color: black;
+    padding: 6px 12px;
+    border-radius: 6px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -239,81 +324,15 @@ QLineEdit:focus {
     font-size: 14px;
     font-weight: bold;
 }
-
-QPushButton#saveButton:hover {
-    background-color: #0056b3;
-}
-
-QPushButton#saveButton:pressed {
-    background-color: #004085;
-}</string>
-       </property>
-       <property name="text">
-        <string>✓ Save changes</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="cancelButton">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton#cancelButton {
-    background-color: #E0E0E0;
-    color: #333;
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    font-size: 14px;
-}
-
-QPushButton#cancelButton:hover {
-    background-color: #d0d0d0;
-}
-
-QPushButton#cancelButton:pressed {
-    background-color: #c0c0c0;
-}</string>
-       </property>
-       <property name="text">
-        <string>✘ Cancel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_5">
-     <property name="styleSheet">
-      <string notr="true">QLabel#label_5 {
-    color: #666;
-    font-size: 12px;
-    padding: 5px;
-}</string>
-     </property>
-     <property name="text">
-      <string>🅘 Los cambios son guardados localmente</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
+</string>
+   </property>
+   <property name="text">
+    <string>Los cambios son guardados localmente</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
