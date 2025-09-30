@@ -40,6 +40,32 @@
          <property name="styleSheet">
           <string notr="true">QFrame {
 	background-color: white;
+}
+
+QFrame#frame_sidebar {
+	padding: 0 20px;
+	border-radius: 10px;
+}
+
+QPushButton {
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 6px 12px;
+	text-align: left;
+	padding:  10px 80px 10px 10px;
+}
+QPushButton:hover {
+    background-color: #0056b3;
+}
+
+QPushButton:pressed {
+    background-color: #004085;
+}
+
+QLabel {
+	color: black;
 }</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -47,7 +73,8 @@
            <widget class="QFrame" name="sidebar_header">
             <property name="styleSheet">
              <string notr="true">QLabel {
-  color: black;
+    color: black;
+	font-weight: bold;
 }</string>
             </property>
             <property name="frameShape">
@@ -70,20 +97,7 @@
           <item>
            <widget class="QPushButton" name="btn_sidebar_1">
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: #3498db;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 6px 12px;
-}
-QPushButton:hover {
-    background-color: #2980b9;
-}
-QPushButton:pressed {
-    background-color: #1f618d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Dashboard</string>
@@ -96,20 +110,7 @@ QPushButton:pressed {
              <enum>Qt::LayoutDirection::LeftToRight</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: #3498db;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 6px 12px;
-}
-QPushButton:hover {
-    background-color: #2980b9;
-}
-QPushButton:pressed {
-    background-color: #1f618d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Hábitos</string>
@@ -119,20 +120,7 @@ QPushButton:pressed {
           <item>
            <widget class="QPushButton" name="btn_sidebar_3">
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: #3498db;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 6px 12px;
-}
-QPushButton:hover {
-    background-color: #2980b9;
-}
-QPushButton:pressed {
-    background-color: #1f618d;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Configuraciones</string>
@@ -152,43 +140,82 @@ QPushButton:pressed {
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_username">
+            <property name="styleSheet">
+             <string notr="true">text-align: center;       /* Alineación horizontal */
+vertical-align: middle;   /* Alineación vertical */
+font-weight: bold;</string>
+            </property>
+            <property name="text">
+             <string>Usuario</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="styleSheet">
+             <string notr="true">color: lightgray;</string>
+            </property>
+            <property name="text">
+             <string>HabitApp v1.0.4</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame_main_content">
+        <widget class="QWidget" name="widget_main_content" native="true">
          <property name="styleSheet">
-          <string notr="true">QFrame {
-	background-color: lightgray;
-}</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Shape::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Shadow::Raised</enum>
+          <string notr="true"/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QFrame" name="frame_header">
+           <widget class="QWidget" name="widget_header" native="true">
             <property name="styleSheet">
              <string notr="true">QFrame {
 	background-color: white;
+	padding: 3px 3px 10px 3px;
+}
+
+QWidget {
+	background-color: white;
+	padding: 3px 3px 15px 3px;
+}
+
+QWidget#widget_header {
+	border-radius: 10px;
 }
 
 QLabel {
 	color: black;
 }</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Shadow::Raised</enum>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QLabel" name="header_content_title">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    color: black;
+	font-weight: bold;
+	font-size: 20px;
+}</string>
+               </property>
                <property name="text">
                 <string>A title</string>
                </property>
@@ -211,17 +238,17 @@ QLabel {
               <widget class="QPushButton" name="btn_header_content">
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-    background-color: #3498db;
+    background-color: #007BFF;
     color: white;
     font-size: 12px;
     border-radius: 8px;
     padding: 6px 12px;
 }
 QPushButton:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
 }
 QPushButton:pressed {
-    background-color: #1f618d;
+    background-color: #004085;
 }</string>
                </property>
                <property name="text">

@@ -7,22 +7,29 @@
     <x>0</x>
     <y>0</y>
     <width>766</width>
-    <height>569</height>
+    <height>568</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListWidget" name="habits_list_container">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1200</width>
-     <height>800</height>
-    </rect>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;        /* Negrita */
+font-size: 25px;
+padding: 0 0 0 20px;</string>
+     </property>
+     <property name="text">
+      <string>Todos tus hábitos</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="habits_list_container"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

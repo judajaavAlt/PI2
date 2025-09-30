@@ -15,7 +15,8 @@ def generate_ui_file_path(file: str):
 
 
 class ConfigPage:
-    def __init__(self):
+    def __init__(self, main_window=None):
+        self.main_window = main_window
         self.load_ui_file()
         self.repo = PreferencesUserRepository()
         self.use_case = UpdateProfileUseCase(self.repo)
@@ -53,6 +54,7 @@ class ConfigPage:
         if profile:
             if self.name_input:
                 self.name_input.setText(profile.name)
+                self.main_window.change_username(profile.name)
             if profile.photo_path:
                 self.photo_path = profile.photo_path
                 self.set_image(profile.photo_path)
@@ -101,6 +103,7 @@ class ConfigPage:
     def on_save(self):
         name = self.name_input.text().strip() if self.name_input else ""
         photo = self.photo_path or ""
+        self.main_window.change_username(name)
         self.use_case.execute(name, photo)
         QMessageBox.information(self.window, "Guardado", "Perfil actualizado correctamente")
         

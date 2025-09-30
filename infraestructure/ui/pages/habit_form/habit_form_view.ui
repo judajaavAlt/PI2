@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>610</height>
+    <width>850</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,7 @@
     padding: 10px;
 	margin: 60px 20px 80px;
 	margin: 0px auto;
+	border-radius: 10px;
 }
 
 QLabel {
@@ -159,13 +160,20 @@ QPushButton {
 }
 
 QCheckBox::indicator:checked {
-	background-color: #3498db;
+	background-color: #0056b3;
 }
 
 QWidget {
-  padding: 0;
+  padding: 0 0 0 0;
   margin-top: 0;
   margin-bottom: 0;
+}
+
+QCheckBox {
+    border: 1px solid lightgray;
+	border-radius: 3px;
+	padding: 3px 0px 3px 3px;
+	max-width: 80px;
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -244,6 +252,10 @@ QWidget {
      <property name="styleSheet">
       <string notr="true">QWidget {
 	margin: 0px 70px;
+}
+
+QPushButton {
+	font-weight: bold;
 }</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -251,8 +263,16 @@ QWidget {
        <widget class="QPushButton" name="btn_save">
         <property name="styleSheet">
          <string notr="true">QPushButton {
-	background-color: #3498db;
+	background-color: #007BFF;
 	color: white;
+}
+
+QPushButton#btn_save:hover {
+    background-color: #0056b3;
+}
+
+QPushButton#btn_save:pressed {
+    background-color: #004085;
 }</string>
         </property>
         <property name="text">

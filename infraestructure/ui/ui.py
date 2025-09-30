@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QApplication, QPushButton, QStackedWidget, QLabel
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
+
 import os
 from infraestructure.ui.pages.config.config import ConfigPage
 from infraestructure.ui.pages.dashboard.dashboard import DashboardPage
@@ -19,6 +20,7 @@ def generate_ui_file_path(file: str):
 class MainWindow:
     def __init__(self):
         self.load_ui_file()
+        self.window.setWindowTitle("HabitApp")
 
         # Access the widgets by their objectName
         self.btn_sidebar_1: QPushButton = self.window.findChild(
@@ -61,7 +63,7 @@ class MainWindow:
     def load_pages(self):
         self.dashboard_page = DashboardPage()
         self.habits_page = HabitsPage(main_window=self)
-        self.config_page = ConfigPage()
+        self.config_page = ConfigPage(main_window=self)
         self.habits_detail_page = HabitDetailPage(main_window=self)
         self.habits_form_page = HabitFormPage(main_window=self)
 
@@ -86,10 +88,48 @@ class MainWindow:
             case 4:
                 self.change_header_content_title("Hábito: Formulario")
                 self.habits_form_page.set_props(props)
+        self.set_button_selected(index)
         self.main_stacked_widget.setCurrentIndex(index)
+
+    def set_button_selected(self, btn_index: int):
+        buttons = [self.btn_sidebar_1, self.btn_sidebar_2, self.btn_sidebar_3]
+
+        # Styles
+        normal_style = """
+            QPushButton {
+                background-color: #2c3e50;
+                font-weight: bold;
+                color: gray;
+            }
+            QPushButton:hover {
+                background-color: #34495e;
+                color: lightgray;
+            }
+            QPushButton:pressed {
+                background-color: #1f2a36;
+            }
+        """
+
+        selected_style = """
+            QPushButton {
+                background-color: #007BFF;
+                font-weight: bold;
+            }
+        """
+
+        for i, btn in enumerate(buttons):
+            if i == btn_index:
+                btn.setStyleSheet(selected_style)
+            else:
+                btn.setStyleSheet(normal_style)
 
     def change_header_content_title(self, title: str):
         self.header_content_title.setText(title)
+
+    def change_username(self, name: str):
+        label_username: QLabel = self.window.findChild(
+            QLabel, "label_username")
+        label_username.setText(name)
 
 
 class UiStarter:
