@@ -60,7 +60,7 @@
              <item>
               <widget class="QLabel" name="label_app_title">
                <property name="text">
-                <string>Titulo App</string>
+                <string>HABITAPP</string>
                </property>
               </widget>
              </item>
