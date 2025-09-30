@@ -52,4 +52,12 @@ class HabitsWidget(QWidget):
 
     def update_habit(self, habit):
         """Actualiza el hábito cuando se cambia el estado."""
-        self.update_habit_uc.execute(habit)
+        self.update_habit_uc.execute(
+            habit.habit_id,
+            habit.name.value,
+            habit.description.value,
+            habit.frequency.value,
+            habit.is_completed,
+            habit.streak.value
+        )
+
