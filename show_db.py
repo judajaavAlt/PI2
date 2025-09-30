@@ -7,6 +7,6 @@ db = repo.db_path
 conn = sqlite3.connect(db)
 cursor = conn.cursor()
 print("TABLE habits rows:")
-for row in cursor.execute("SELECT habit_id, name, description, frequency, is_active FROM habits"):
+for row in cursor.execute("SELECT habit_id, name, description, frequency, is_completed FROM habits"):
     print(row)
 conn.close()

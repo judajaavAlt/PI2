@@ -1,36 +1,80 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QHBoxLayout
+from PySide6.QtWidgets import (
+    QWidget, QLabel, QListWidget, QListWidgetItem, QVBoxLayout,
+    QHBoxLayout, QFrame, QSizePolicy
+)
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import QGraphicsDropShadowEffect
 from itertools import cycle
 
 from application.use_cases.list_habits import ListHabits
 from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
 
 
-class HabitItemWidget(QWidget):
+class HabitItemWidget(QFrame):
     """
-    Widget que representa un hábito en la lista, con nombre, id y color.
+    Tarjeta de hábito estilizada con icono, texto y flecha de navegación.
     """
-    def __init__(self, habit, color, parent=None):
+    def __init__(self, habit, bg_color, icon_color, parent=None):
         super().__init__(parent)
 
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(5, 5, 5, 5)
+        self.setFixedHeight(70)  # altura consistente
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #FFFFFF;
+                border-radius: 6px;
+            }
+            QLabel {
+                font-family: Arial, sans-serif;
+            }
+        """)
 
-        # Color identificador (círculo)
-        color_label = QLabel()
-        color_label.setFixedSize(20, 20)
-        color_label.setStyleSheet(f"background-color: {color}; border-radius: 10px;")
-        layout.addWidget(color_label)
+        # Efecto de sombra sutil
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(12)
+        shadow.setOffset(0, 2)
+        shadow.setColor(QColor(0, 0, 0, 50))  # sombra suave
+        self.setGraphicsEffect(shadow)
 
-        # Nombre + ID del hábito
-        name_label = QLabel(f"{habit.name.value} (ID: {habit.habit_id})")
-        layout.addWidget(name_label)
+        # Layout principal
+        main_layout = QHBoxLayout(self)
+        main_layout.setContentsMargins(12, 8, 12, 8)
+        main_layout.setSpacing(12)
 
-        layout.addStretch()
+        # Icono circular con fondo claro y color oscuro dentro
+        icon_label = QLabel()
+        icon_label.setFixedSize(40, 40)
+        icon_label.setStyleSheet(f"""
+            background-color: {bg_color};
+            border-radius: 20px;
+        """)
+        main_layout.addWidget(icon_label)
+
+        # Contenedor de textos
+        text_layout = QVBoxLayout()
+        text_layout.setSpacing(2)
+
+        # Texto principal (nombre)
+        name_label = QLabel(habit.name.value)
+        name_label.setStyleSheet("color: #333333; font-size: 14px; font-weight: 600;")
+        text_layout.addWidget(name_label)
+
+        # Texto secundario (ID)
+        id_label = QLabel(f"ID: {habit.habit_id}")
+        id_label.setStyleSheet("color: #888888; font-size: 11px;")
+        text_layout.addWidget(id_label)
+
+        main_layout.addLayout(text_layout)
+
+        # Flecha de navegación
+        arrow_label = QLabel(">")
+        arrow_label.setStyleSheet("color: #CCCCCC; font-size: 16px;")
+        arrow_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        main_layout.addWidget(arrow_label)
 
 
 class HabitsListWidget(QWidget):
     """
-    Widget que muestra la lista de hábitos en un QListWidget.
+    Lista de hábitos estilizada tipo tarjetas.
     """
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -38,20 +82,21 @@ class HabitsListWidget(QWidget):
         self.repo = HabitSqliteRepository()
         self.list_habits_uc = ListHabits(self.repo)
 
-        # Lista de colores predeterminados
-        self.colors = [
-            "#FF6B6B",  # rojo
-            "#6BCB77",  # verde
-            "#4D96FF",  # azul
-            "#FFD93D",  # amarillo
-            "#845EC2",  # morado
-            "#FF9671",  # naranja
+        # Paleta de colores (pares: fondo claro, color oscuro para icono)
+        self.color_pairs = [
+            ("#E0F7FA", "#00796B"),  # azul claro + azul oscuro
+            ("#FFF3E0", "#E65100"),  # naranja claro + naranja oscuro
+            ("#E8F5E9", "#2E7D32"),  # verde claro + verde oscuro
+            ("#F3E5F5", "#6A1B9A"),  # violeta claro + violeta oscuro
+            ("#FBE9E7", "#BF360C"),  # coral claro + marrón rojizo
         ]
-        self.color_cycle = cycle(self.colors)  # Para iterar cíclicamente
+        self.color_cycle = cycle(self.color_pairs)
 
-        # Layout principal con QListWidget
+        # Layout principal
         main_layout = QVBoxLayout(self)
         self.list_widget = QListWidget()
+        self.list_widget.setSpacing(10)  # separación entre tarjetas
+        self.list_widget.setStyleSheet("QListWidget { background: #F5F5F5; border: none; }")
         main_layout.addWidget(self.list_widget)
 
         self.load_habits()
@@ -61,16 +106,16 @@ class HabitsListWidget(QWidget):
         habits = self.list_habits_uc.execute()
 
         if not habits:
-            self.list_widget.addItem("⚠️ No hay hábitos registrados.")
+            empty_item = QListWidgetItem("⚠️ No hay hábitos registrados.")
+            self.list_widget.addItem(empty_item)
             return
 
         for habit in habits:
-            color = next(self.color_cycle)  # Asignar color del ciclo
-            item_widget = HabitItemWidget(habit, color)
+            bg_color, icon_color = next(self.color_cycle)
+            item_widget = HabitItemWidget(habit, bg_color, icon_color)
 
             list_item = QListWidgetItem()
             list_item.setSizeHint(item_widget.sizeHint())
 
             self.list_widget.addItem(list_item)
             self.list_widget.setItemWidget(list_item, item_widget)
-
