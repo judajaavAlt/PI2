@@ -60,7 +60,7 @@ class MainWindow:
 
     def load_pages(self):
         self.dashboard_page = DashboardPage()
-        self.habits_page = HabitsPage()
+        self.habits_page = HabitsPage(main_window=self)
         self.config_page = ConfigPage()
         self.habits_detail_page = HabitDetailPage(main_window=self)
         self.habits_form_page = HabitFormPage(main_window=self)
@@ -76,7 +76,9 @@ class MainWindow:
             case 0:
                 self.change_header_content_title("Dashboard")
                 self.dashboard_page.update_widgets()
-            case 1: self.change_header_content_title("Hábitos")
+            case 1:
+                self.change_header_content_title("Hábitos")
+                self.habits_page.uptate()
             case 2: self.change_header_content_title("Configuración")
             case 3:
                 self.change_header_content_title("Hábito: Detalle")
