@@ -18,7 +18,7 @@ class HabitsPage:
     dentro del contenedor especificado.
     """
 
-    def __init__(self):
+    def __init__(self, main_window=None):
         loader = QUiLoader()
         ui_path = generate_ui_file_path("habits_view.ui")
         ui_file = QFile(ui_path)
@@ -28,6 +28,7 @@ class HabitsPage:
         # Cargar UI
         self.window = loader.load(ui_file)
         ui_file.close()
+        self.main_window = main_window
 
         # Encontrar el contenedor donde se insertará la lista
         container = self.window.findChild(QWidget, "habits_list_container")
@@ -42,5 +43,19 @@ class HabitsPage:
         # Agregar el widget de la lista de hábitos
         self.habits_list_widget = HabitsListWidget()
         layout.addWidget(self.habits_list_widget)
+
+        # Conectar señal al método que abre la página de detalle
+        self.habits_list_widget.habit_clicked.connect(self.open_habit_detail)
+
+    def open_habit_detail(self, habit_dict):
+        if self.main_window is None or not hasattr(self.main_window, 'habit_detail_page'):
+            raise RuntimeError("MainWindow o habit_detail_page no está definido")
+
+        # Pasar el ID al detalle
+        detail_page = self.main_window.habit_detail_page
+        detail_page.set_props(habit_dict)
+
+        # Cambiar la vista a la página de detalle
+        self.main_window.change_page(4)  # 4 = índice de HabitDetailPage en MainWindow
 
 

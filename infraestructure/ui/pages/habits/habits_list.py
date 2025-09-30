@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import QGraphicsDropShadowEffect
 from itertools import cycle
+from PySide6.QtCore import Signal
 
 from application.use_cases.list_habits import ListHabits
 from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
@@ -76,6 +77,7 @@ class HabitsListWidget(QWidget):
     """
     Lista de hábitos estilizada tipo tarjetas.
     """
+    habit_clicked = Signal(dict)  # señal que enviará {'id': habit_id}
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -99,6 +101,8 @@ class HabitsListWidget(QWidget):
         self.list_widget.setStyleSheet("QListWidget { background: #F5F5F5; border: none; }")
         main_layout.addWidget(self.list_widget)
 
+        self.list_widget.itemClicked.connect(self.on_item_clicked)
+
         self.load_habits()
 
     def load_habits(self):
@@ -111,11 +115,21 @@ class HabitsListWidget(QWidget):
             return
 
         for habit in habits:
-            bg_color, icon_color = next(self.color_cycle)
-            item_widget = HabitItemWidget(habit, bg_color, icon_color)
+             self.add_habit(habit)
 
-            list_item = QListWidgetItem()
-            list_item.setSizeHint(item_widget.sizeHint())
+    def add_habit(self, habit):
+        bg_color, icon_color = next(self.color_cycle)
+        item_widget = HabitItemWidget(habit, bg_color, icon_color)
 
-            self.list_widget.addItem(list_item)
-            self.list_widget.setItemWidget(list_item, item_widget)
+        list_item = QListWidgetItem()
+        list_item.setSizeHint(item_widget.sizeHint())
+
+        self.list_widget.addItem(list_item)
+        self.list_widget.setItemWidget(list_item, item_widget)
+
+    def on_item_clicked(self, item):
+        """Emitir señal con ID del hábito al hacer click en el item"""
+        habit_widget = self.list_widget.itemWidget(item)
+        if habit_widget and hasattr(habit_widget, 'habit'):
+            habit = habit_widget.habit
+            self.habit_clicked.emit({"id": habit.habit_id})
