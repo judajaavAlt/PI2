@@ -24,4 +24,5 @@ class UpdateController:
             fun.execute(habit, keep_streak)
 
         # Saves the new last date
-        DataHandler.save_data(tm.now())
+        data["last_date"] = tm.now()
+        DataHandler.save_data(data)
