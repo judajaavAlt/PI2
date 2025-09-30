@@ -58,8 +58,35 @@ class ConfigPage:
     def set_image(self, path):
         pix = QPixmap(path)
         if not pix.isNull() and self.image_label:
-            pix = pix.scaled(101, 101, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            self.image_label.setPixmap(pix)
+            # Crear un pixmap circular
+            size = 120  # Tamaño del círculo
+            rounded_pix = QPixmap(size, size)
+            rounded_pix.fill(Qt.transparent)
+            
+            # Crear un painter para dibujar el círculo
+            from PySide6.QtGui import QPainter, QBrush
+            from PySide6.QtCore import QRect
+            painter = QPainter(rounded_pix)
+            painter.setRenderHint(QPainter.Antialiasing)
+            painter.setRenderHint(QPainter.SmoothPixmapTransform)
+            
+            # Crear un path circular para el clip
+            from PySide6.QtGui import QPainterPath
+            path = QPainterPath()
+            path.addEllipse(0, 0, size, size)
+            painter.setClipPath(path)
+            
+            # Escalar la imagen para que llene el círculo manteniendo la relación de aspecto
+            scaled = pix.scaled(size, size, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+            
+            # Centrar la imagen en el círculo
+            x = (scaled.width() - size) / 2
+            y = (scaled.height() - size) / 2
+            painter.drawPixmap(QRect(0, 0, size, size), scaled, QRect(x, y, size, size))
+            
+            painter.end()
+            
+            self.image_label.setPixmap(rounded_pix)
         elif self.image_label:
             self.image_label.setText("No image")
 
