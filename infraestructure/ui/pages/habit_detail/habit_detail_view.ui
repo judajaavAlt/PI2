@@ -16,9 +16,13 @@
   <property name="styleSheet">
    <string notr="true">QWidget {
 	background-color: white;
-	padding: 10px;
-	margin: 60px 20px 80px;
+	margin-left: 20px;
+	margin-top: 0;
+	margin-right: 20px;
 	border-radius: 10px;
+	padding: 10px;
+	/*padding: 10px;*/
+	/*margin: 60px 20px 80px;*/
 }
 
 QLabel {
@@ -30,10 +34,23 @@ QLabel {
     <widget class="QLabel" name="label_habit_name">
      <property name="styleSheet">
       <string notr="true">font-weight: bold;
-font-size: 20px;</string>
+font-size: 20px;
+margin-bottom: 0;
+margin-top: 0;</string>
      </property>
      <property name="text">
       <string>Titulo hábito</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="styleSheet">
+      <string notr="true">color: lightgray;
+background-color: lightgray;</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -70,6 +87,7 @@ font-size: 20px;</string>
         <property name="styleSheet">
          <string notr="true">QLabel {
 	padding: 5px;
+	border: 1px solid gray;
 }</string>
         </property>
         <property name="text">
@@ -107,6 +125,7 @@ font-size: 20px;</string>
         <property name="styleSheet">
          <string notr="true">QLabel {
 	padding: 5px;
+	border: 1px solid gray;
 }</string>
         </property>
         <property name="text">
@@ -128,14 +147,20 @@ font-weight: bold;</string>
        <widget class="QPushButton" name="btn_edit">
         <property name="styleSheet">
          <string notr="true">QPushButton {
-	background-color: #007BFF;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-QPushButton#btn_editar:hover {
+QPushButton:hover {
     background-color: #0056b3;
 }
 
-QPushButton#btn_editar:pressed {
+QPushButton:pressed {
     background-color: #004085;
 }</string>
         </property>
@@ -148,7 +173,21 @@ QPushButton#btn_editar:pressed {
        <widget class="QPushButton" name="btn_delete">
         <property name="styleSheet">
          <string notr="true">QPushButton {
-	background-color: red;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #d32f2f;
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c;
 }</string>
         </property>
         <property name="text">
@@ -173,9 +212,24 @@ QPushButton#btn_editar:pressed {
     </widget>
    </item>
    <item>
+    <widget class="Line" name="line">
+     <property name="styleSheet">
+      <string notr="true">color: lightgray;
+background-color: lightgray;</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label">
      <property name="styleSheet">
-      <string notr="true">margin-top: 0;</string>
+      <string notr="true">margin-top: 0;
+margin-bottom: 0;
+padding: 0;
+max-height: 25px;
+color: gray;</string>
      </property>
      <property name="text">
       <string>Aquí puedes ver el detalle de un hábito, puedes editarlo o eliminarlo</string>
