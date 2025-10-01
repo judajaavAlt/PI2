@@ -28,6 +28,9 @@ class HabitProgress:
         # Traer todos los hábitos
         habits = self.repository.get_all_habits()
 
+        total_streak = len([1 for h in habits if h.streak.value > 0])
+        total_progress = total_streak/len(habits) if len(habits) > 0 else 0
+
         # Filtrar hábitos activos para hoy
         todays_habits = [h for h in habits if h.frequency.is_active(today_es)]
 
@@ -38,6 +41,9 @@ class HabitProgress:
                 "completed": 0,
                 "pending": 0,
                 "progress": 0.0,
+                "total_habits": len(habits),
+                "total_streak": total_streak,
+                "progress_streak": total_progress
             }
 
         # Contar completados
@@ -52,4 +58,7 @@ class HabitProgress:
             "completed": completed,
             "pending": pending,
             "progress": progress,
+            "total_habits": len(habits),
+            "total_streak": total_streak,
+            "progress_streak": total_progress
         }

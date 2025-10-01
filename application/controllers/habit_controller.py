@@ -53,4 +53,3 @@ class HabitController:
     @classmethod
     def get_daily_progress_habits(cls):
         return HabitProgress(cls.repo).execute()
-        pass

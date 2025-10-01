@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Frequency:
     DAYS = ["lunes", "martes", "miercoles", "jueves", "viernes",
             "sabado", "domingo"]
@@ -47,6 +49,11 @@ class Frequency:
             return self.days[index] == 1
         else:
             raise TypeError("El día debe ser int o str")
+
+    def is_today(self) -> bool:
+        """Devuelve True si el hábito está activo para el día actual."""
+        today_index = datetime.today().weekday()  # 0=lunes, 6=domingo
+        return self.is_active(today_index)
 
     def __str__(self):
         return str(self.days)

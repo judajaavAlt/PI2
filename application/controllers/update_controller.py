@@ -17,11 +17,11 @@ class UpdateController:
 
         # updates streak and state
         habits = HabitController.list_habits()
-        for habit in habits:
-            time_distance = tm.days_distance(last_date, tm.now())
-            keep_streak = time_distance <= 1
+        time_distance = tm.days_distance(last_date, tm.now())
+        if time_distance >= 1:
             fun = UpdateStreak(HabitSqliteRepository())
-            fun.execute(habit, keep_streak)
+            for habit in habits:
+                fun.execute(habit, time_distance)
 
         # Saves the new last date
         data["last_date"] = tm.now()
