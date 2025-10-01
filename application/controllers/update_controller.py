@@ -21,7 +21,7 @@ class UpdateController:
         if time_distance >= 1:
             fun = UpdateStreak(HabitSqliteRepository())
             for habit in habits:
-                fun.execute(habit)
+                fun.execute(habit, time_distance)
 
         # Saves the new last date
         data["last_date"] = tm.now()
