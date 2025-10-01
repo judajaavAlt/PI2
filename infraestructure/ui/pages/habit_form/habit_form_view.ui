@@ -346,7 +346,7 @@ QPushButton:pressed {
       <string notr="true">color: gray;</string>
      </property>
      <property name="text">
-      <string>Puedes editar o eliminar este hábito luego en la sección de Detalle</string>
+      <string>Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
      </property>
     </widget>
    </item>

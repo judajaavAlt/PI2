@@ -19,13 +19,22 @@ class HabitItemWidget(QFrame):
         super().__init__(parent)
 
         self.setFixedHeight(70)  # altura consistente
+        self.setObjectName("habitFrame")
         self.setStyleSheet("""
             QFrame {
                 background-color: #FFFFFF;
                 border-radius: 6px;
+                background-color: transparent;
             }
             QLabel {
                 font-family: Arial, sans-serif;
+                background-color: transparent;
+            }
+            QFrame#habitFrame {
+                background-color: #FFFFFF;
+            }
+            QFrame#habitFrame:hover {
+                background-color: #DDDDDD;
             }
         """)
 
