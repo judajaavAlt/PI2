@@ -9,4 +9,4 @@ class SwitchHabitState:
     def execute(self, id: int, habit: Habit):
         new_habit = habit.copy()
         new_habit.is_completed = not habit.is_completed
-        return self.repository.update_habit(id, new_habit)
+        return self.repository.update_habit(habit.habit_id, new_habit)
