@@ -49,7 +49,7 @@ class DashboardPage(QWidget):
 
         total_habits = habits_progress["total_habits"]
         total_streak_habits = habits_progress["total_streak"]
-        streak_percentage = habits_progress["progress_streak"]
+        streak_percentage = int(habits_progress["progress_streak"] * 100)
 
         # Obtener el nombre del usuario
         user_name = self.get_user_name()
@@ -103,7 +103,7 @@ class DashboardPage(QWidget):
             QProgressBar, "progress_bar_streak"
         )
         progress_bar_today.setValue(todays_percentage)
-        progress_bar_streak.setValue(streak_percentage*100)
+        progress_bar_streak.setValue(streak_percentage)
 
     def setup_widgets(self):
         # Crear layout vertical en el contenedor habitsContainer del UI

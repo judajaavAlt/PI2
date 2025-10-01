@@ -1,26 +1,23 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QCheckBox
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QCheckBox, QFrame
 from application.use_cases.list_habits import ListHabits
 from application.use_cases.update_habit import UpdateHabit
 from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
 from application.controllers.habit_controller import HabitController
 
 
+# Widget that shows a list of today's habits in a scroll area
 class HabitsWidget(QWidget):
-    """
-    Widget que muestra directamente la lista de hábitos del día en un scroll.
-    """
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent = parent
         self.controller = HabitController()
 
-        # Repositorio y casos de uso
+        # Repository and use cases
         self.repo = HabitSqliteRepository()
         self.list_habits_uc = ListHabits(self.repo)
         self.update_habit_uc = UpdateHabit(self.repo)
 
-        # Layout principal
+        # Create main layout
         main_layout = QVBoxLayout(self)
         self.setStyleSheet("""
             QCheckBox {
@@ -39,49 +36,60 @@ class HabitsWidget(QWidget):
             }
         """)
 
-        # Scroll con contenido
+        # Create scroll
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
+        self.scroll.setMinimumHeight(150)
 
         self.scroll_content = QWidget()
         self.scroll_layout = QVBoxLayout(self.scroll_content)
+
+        # Set space in scroll layout
+        self.scroll_layout.setSpacing(10)
+        self.scroll_layout.setContentsMargins(10, 10, 10, 10)
+
         self.scroll.setWidget(self.scroll_content)
-
-        self.scroll_content.setMinimumHeight(200)
-
         main_layout.addWidget(self.scroll)
 
-        # Cargar hábitos
+        # Load habits
         self.load_habits()
 
     def load_habits(self):
-        # Eliminar todos los widgets del layout (si hay alguno)
+        # Delete any widget in layout
         for i in range(self.scroll_layout.count()):
             widget_item = self.scroll_layout.itemAt(i)
             if widget_item.widget():
                 widget_item.widget().deleteLater()
 
-        """Carga y muestra los hábitos del día."""
+        # Load today's habits
         habits = self.list_habits_uc.execute()
 
         if not habits:
             self.scroll_layout.addWidget(QLabel("⚠️ No hay hábitos para hoy."))
             return
 
-        for habit in habits:
-            # Filtrar solo los del día
-            if habit.frequency.is_today():
-                checkbox = QCheckBox(habit.name.value)
-                checkbox.setChecked(habit.is_completed)
-                checkbox.stateChanged.connect(
-                    lambda state, h=habit:
-                    self.change_habit_state(h))
-                self.scroll_layout.addWidget(checkbox)
+        # Filter to get today's habits
+        todays_habits = [h for h in habits if h.frequency.is_today()]
 
-        self.scroll_layout.addStretch()
+        print(todays_habits[0])
+        # Sort habits so completed ones are firts, keeping a stable sort
+        todays_habits = sorted(
+            todays_habits,
+            key=lambda h: h.is_completed,
+            reverse=False
+        )
 
+        for habit in todays_habits:
+            checkbox = QCheckBox(habit.name.value)
+            checkbox.setMinimumHeight(20)
+            checkbox.setChecked(habit.is_completed)
+            checkbox.stateChanged.connect(
+                lambda state, h=habit:
+                self.change_habit_state(h))
+            self.scroll_layout.addWidget(checkbox)
+
+        self.scroll_content.adjustSize()
         self.scroll_content.updateGeometry()
-        self.scroll.update()
         self.scroll.ensureWidgetVisible(self.scroll_content)
 
     def change_habit_state(self, habit):
