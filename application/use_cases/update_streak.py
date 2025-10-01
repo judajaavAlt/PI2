@@ -7,8 +7,8 @@ class UpdateStreak:
     def __init__(self, repository: HabitRepository) -> None:
         self.repository = repository
 
-    def execute(self, habit: Habit):
-        lost_days = tm.get_lost_days()
+    def execute(self, habit: Habit, days_passed):
+        lost_days = tm.get_lost_days(days_passed)
         habit_days = habit.frequency.value
         keep_streak = sum([lost_days[i] & habit_days[i] for i in range(7)]) == 0
         
