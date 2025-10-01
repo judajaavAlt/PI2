@@ -106,25 +106,34 @@ class DashboardPage(QWidget):
         progress_bar_streak.setValue(streak_percentage*100)
 
     def setup_widgets(self):
+        # Crear layout vertical en el contenedor habitsContainer del UI
+        self.habits_container_layout = QVBoxLayout(self.window.habitsContainer)
+        # self.habits_container_layout.addWidget(self.habits_widget)
+        self.habits_container_layout.addStretch()
+
+        self.update_habit_widget()
+
+    def update_habit_widget(self):
         self.set_progresses()
+
+        # Eliminar todos los widgets del layout (si hay alguno)
+        for i in range(self.habits_container_layout.count()):
+            widget_item = self.habits_container_layout.itemAt(i)
+            if widget_item.widget():
+                widget_item.widget().deleteLater()
+
         # Crear el HabitsWidget
         self.habits_widget = HabitsWidget(self)
 
-        # Asegurar tamaño mínimo del widget
-        self.habits_widget.setMinimumHeight(200)
-        self.habits_widget.setMinimumWidth(200)
+        # Asegurar tamaño del widget
+        self.habits_widget.setFixedHeight(170)
 
-        # Crear layout vertical en el contenedor habitsContainer del UI
-        self.habits_container_layout = QVBoxLayout(self.window.habitsContainer)
         self.habits_container_layout.addWidget(self.habits_widget)
-        self.habits_container_layout.addStretch()
 
         # Forzar actualización del contenedor para que se muestre
         self.window.habitsContainer.updateGeometry()
         self.window.habitsContainer.repaint()
 
     def update_widgets(self):
-        self.set_progresses()
         self.habits_widget.load_habits()
-        self.window.habitsContainer.updateGeometry()
-        self.window.habitsContainer.repaint()
+        self.update_habit_widget()
