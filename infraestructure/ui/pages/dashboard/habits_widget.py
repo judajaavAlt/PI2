@@ -85,8 +85,7 @@ class HabitsWidget(QWidget):
         self.scroll.ensureWidgetVisible(self.scroll_content)
 
     def change_habit_state(self, habit):
-        habit_changed = self.controller.switch_habit_state(habit)
-        self.controller.update_habit(habit_changed)
+        self.controller.switch_habit_state(habit)
         self.parent.update_widgets()
 
     def update_habit(self, habit):

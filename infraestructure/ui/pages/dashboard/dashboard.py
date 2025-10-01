@@ -43,7 +43,6 @@ class DashboardPage(QWidget):
 
     def set_progresses(self):
         habits_progress = self.controller.get_daily_progress_habits()
-        print("progresos: ", habits_progress)
         todays_percentage = int(habits_progress["progress"])
         total_todays_habits = habits_progress["total"]
         completed_todays_habits = habits_progress["completed"]
@@ -104,7 +103,7 @@ class DashboardPage(QWidget):
             QProgressBar, "progress_bar_streak"
         )
         progress_bar_today.setValue(todays_percentage)
-        progress_bar_streak.setValue(streak_percentage)
+        progress_bar_streak.setValue(streak_percentage*100)
 
     def setup_widgets(self):
         self.set_progresses()
