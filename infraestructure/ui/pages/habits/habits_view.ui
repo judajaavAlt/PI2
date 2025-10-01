@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Hábitos</class>
+ <widget class="QWidget" name="Hábitos">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>766</width>
+    <height>568</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;        /* Negrita */
+font-size: 25px;
+padding: 0 0 0 20px;</string>
+     </property>
+     <property name="text">
+      <string>Todos tus hábitos</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;
+font-size: 15px;
+padding: 0 0 0 20px;
+color: gray;</string>
+     </property>
+     <property name="text">
+      <string>Selecciona un hábito para ver el detalle</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="habits_list_container"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
