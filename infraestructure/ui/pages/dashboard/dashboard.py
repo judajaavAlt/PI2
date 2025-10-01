@@ -21,7 +21,8 @@ class DashboardPage(QWidget):
         self.load_ui_file()
         self.controller = HabitController()
         # Agregar el use case para cargar el perfil del usuario
-        self.profile_use_case = UpdateProfileUseCase(PreferencesUserRepository())
+        self.profile_use_case = UpdateProfileUseCase(
+            PreferencesUserRepository())
         self.setup_widgets()
 
     def load_ui_file(self):
@@ -47,9 +48,9 @@ class DashboardPage(QWidget):
         total_todays_habits = habits_progress["total"]
         completed_todays_habits = habits_progress["completed"]
 
-        total_habits = 8  # habits_progress["total_habits"]
-        total_streak_habits = 3  # habits_progress["total_streak"]
-        streak_percentage = 0.8  # habits_progress["progress_streak"]
+        total_habits = habits_progress["total_habits"]
+        total_streak_habits = habits_progress["total_streak"]
+        streak_percentage = habits_progress["progress_streak"]
 
         # Obtener el nombre del usuario
         user_name = self.get_user_name()
@@ -61,12 +62,14 @@ class DashboardPage(QWidget):
             QLabel, "todayProgressText")
         streak_progress_text: QLabel = self.window.findChild(
             QLabel, "streakProgressText")
-        
+
         # Actualizar el saludo con el nombre del usuario
-        banner_greeting: QLabel = self.window.findChild(QLabel, "bannerGreeting")
+        banner_greeting: QLabel = self.window.findChild(
+            QLabel, "bannerGreeting")
         if banner_greeting:
-            banner_greeting.setText(f"Increíble progreso el día de hoy {user_name}!")
-        
+            banner_greeting.setText(
+                f"Increíble progreso el día de hoy {user_name}!")
+
         if label_banner_text:
             label_banner_text.setText(
                 f'Has completado {completed_todays_habits} '
@@ -75,7 +78,8 @@ class DashboardPage(QWidget):
             )
         if today_progress_text:
             today_progress_text.setText(
-                f'{completed_todays_habits} de {total_todays_habits} completados')
+                f'{completed_todays_habits} de {total_todays_habits} '
+                'completados')
         if streak_progress_text:
             streak_progress_text.setText(
                 f'{total_streak_habits} de {total_habits} con racha activa')
