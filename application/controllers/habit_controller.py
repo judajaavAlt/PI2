@@ -4,9 +4,10 @@ from application.use_cases.create_habit import CreateHabit
 from application.use_cases.mark_habits_done import SwitchHabitState
 from application.use_cases.update_habit import UpdateHabit
 from application.use_cases.delete_habit import DeleteHabit
-from application.use_cases.list_habits import ListHabits    
+from application.use_cases.list_habits import ListHabits
 from application.use_cases.get_habit import GetHabit
 from application.use_cases.habit_progress import HabitProgress
+from application.use_cases.get_habit_name_existence import GetHabitNameExistence
 
 
 class HabitController:
@@ -43,13 +44,18 @@ class HabitController:
         frequency = habit.frequency.value
         is_completed = habit.is_completed
         streak = habit.streak.value
-        return UpdateHabit(cls.repo).execute(id,
-                                             name,
-                                             description,
-                                             frequency,
-                                             is_completed,
-                                             streak)
+        return UpdateHabit(cls.repo).execute(
+            id,
+            name,
+            description,
+            frequency,
+            is_completed,
+            streak)
 
     @classmethod
     def get_daily_progress_habits(cls):
         return HabitProgress(cls.repo).execute()
+
+    @classmethod
+    def get_habit_name_existence(cls, name: str):
+        return GetHabitNameExistence(cls.repo).execute(name)
