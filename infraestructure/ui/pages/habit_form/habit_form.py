@@ -1,7 +1,8 @@
-from PySide6.QtWidgets import QLineEdit, QPlainTextEdit, QCheckBox, QPushButton, QLabel
+from PySide6.QtWidgets import QLineEdit, QPlainTextEdit, QCheckBox, QPushButton, QLabel, QGraphicsColorizeEffect
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile
+from PySide6.QtCore import QFile, QPropertyAnimation, QEasingCurve
 from application.controllers.habit_controller import HabitController
+from PySide6.QtGui import QColor
 import os
 
 
@@ -143,9 +144,48 @@ class HabitFormPage:
         if not any(frequency):
             self.show_message("Por favor seleccione al menos un día")
             return False
+        if not self.props:
+            if not self.is_habit_name_unique(name):
+                return False
+        else:
+            habit_props = self.controller.get_habit(self.props["id"])
+            if habit_props.name.value.lower() != name.lower():
+                if not self.is_habit_name_unique(name):
+                    return False
 
         return True
 
+    # Show a message to the user with a pulse color animation
     def show_message(self, message):
         label_message: QLabel = self.window.findChild(QLabel, "label_message")
         label_message.setText(message)
+
+        # If there is no effect, create it
+        if not hasattr(label_message, "color_effect"):
+            effect = QGraphicsColorizeEffect()
+            label_message.setGraphicsEffect(effect)
+            label_message.color_effect = effect
+
+        effect = label_message.color_effect
+
+        # Create or reuse animation
+        if not hasattr(label_message, "pulse_anim"):
+            anim = QPropertyAnimation(effect, b"color")
+            anim.setDuration(1500)
+            anim.setStartValue(QColor("black"))
+            anim.setKeyValueAt(0, QColor("#AA0000"))
+            anim.setEndValue(QColor("black"))
+            anim.setEasingCurve(QEasingCurve.InOutQuad)
+            label_message.pulse_anim = anim
+
+        # Restart animation
+        anim = label_message.pulse_anim
+        anim.stop()
+        anim.start()
+
+    def is_habit_name_unique(self, name):
+        if self.controller.get_habit_name_existence(name):
+            self.show_message(
+                "Ya existe un hábito con ese nombre."
+                " Por favor, elija otro")
+            return False

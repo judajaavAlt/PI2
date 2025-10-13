@@ -343,7 +343,7 @@ QPushButton:pressed {
    <item>
     <widget class="QLabel" name="label_message">
      <property name="styleSheet">
-      <string notr="true">color: gray;</string>
+      <string notr="true">background-color: transparent;</string>
      </property>
      <property name="text">
       <string>Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
