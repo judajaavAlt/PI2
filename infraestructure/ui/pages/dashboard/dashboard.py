@@ -7,7 +7,8 @@ import os
 
 from infraestructure.ui.pages.dashboard.habits_widget import HabitsWidget
 from application.use_cases.update_profile_use_case import UpdateProfileUseCase
-from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository
+from infraestructure.repositories.preferences_user_repository import (
+    PreferencesUserRepository)
 
 
 def generate_ui_file_path(file: str):

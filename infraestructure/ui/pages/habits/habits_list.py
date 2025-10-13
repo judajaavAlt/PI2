@@ -8,7 +8,8 @@ from itertools import cycle
 from PySide6.QtCore import Signal
 
 from application.use_cases.list_habits import ListHabits
-from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from infraestructure.persistence.habit_repository_sqlite import (
+    HabitSqliteRepository)
 
 
 class HabitItemWidget(QFrame):
