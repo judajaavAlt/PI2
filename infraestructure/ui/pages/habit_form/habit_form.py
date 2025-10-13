@@ -189,3 +189,4 @@ class HabitFormPage:
                 "Ya existe un hábito con ese nombre."
                 " Por favor, elija otro")
             return False
+        return True
