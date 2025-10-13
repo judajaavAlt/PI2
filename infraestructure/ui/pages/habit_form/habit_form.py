@@ -61,6 +61,7 @@ class HabitFormPage:
         page_file.close()
 
     def set_props(self, props: dict | None):
+        self.clean_form()
         self.props = props
         if self.props:
             id = props["id"]
@@ -86,7 +87,6 @@ class HabitFormPage:
         # Set title
         label_title: QLabel = self.window.findChild(QLabel, "label_title")
         label_title.setText("Nuevo hábito")
-        self.clean_form()
 
     def save_habit(self):
         name = self.name_edit.text()
@@ -121,6 +121,10 @@ class HabitFormPage:
         for check in self.checks:
             check.setChecked(False)
 
+        self.show_message(
+            "Puedes editar o eliminar"
+            " este hábito luego en la sección de Hábitos: Detalle")
+
     # If has id, then it was editing, so go back to detail page,
     # else go back to dashboard
     def go_back(self):
@@ -128,22 +132,16 @@ class HabitFormPage:
             self.main_window.change_page(3, self.props)
         else:
             self.main_window.change_page(0)
-        self.clean_form()
 
     def check_fields(self, name, description, frequency):
-        message = "Por favor"
-
         if len(name) < 1:
-            message += " ingrese un nombre"
-            self.show_message(message)
+            self.show_message("Por favor ingrese un nombre")
             return False
         if len(description) < 1:
-            message += " ingrese una descripción"
-            self.show_message(message)
+            self.show_message("Por favor ingrese una descripción")
             return False
         if not any(frequency):
-            message += " seleccione al menos un día de la semana"
-            self.show_message(message)
+            self.show_message("Por favor seleccione al menos un día")
             return False
 
         return True
