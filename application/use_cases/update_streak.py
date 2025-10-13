@@ -15,7 +15,7 @@ class UpdateStreak:
         if keep_streak:
             habit.modify(streak=habit.streak.increase().value)
         else:
-            habit.modify(streak=habit.streak.reset())
+            habit.modify(streak=habit.streak.reset().value)
 
         habit.modify(is_completed=False)
 
