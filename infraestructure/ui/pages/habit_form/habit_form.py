@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QLineEdit, QPlainTextEdit, QCheckBox, QPushButton, QLabel, QGraphicsColorizeEffect
+from PySide6.QtWidgets import (
+    QLineEdit, QPlainTextEdit, QCheckBox,
+    QPushButton, QLabel, QGraphicsColorizeEffect)
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QPropertyAnimation, QEasingCurve
 from application.controllers.habit_controller import HabitController

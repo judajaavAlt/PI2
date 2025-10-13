@@ -1,11 +1,13 @@
 # ui/config_page.py
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, Qt
-from PySide6.QtWidgets import QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton
+from PySide6.QtWidgets import (
+    QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton)
 from PySide6.QtGui import QPixmap
 import os
 
-from infraestructure.repositories.preferences_user_repository import PreferencesUserRepository
+from infraestructure.repositories.preferences_user_repository import (
+    PreferencesUserRepository)
 from application.use_cases.update_profile_use_case import UpdateProfileUseCase
 
 
@@ -25,7 +27,8 @@ class ConfigPage:
         # buscar widgets por objectName (más fiable con QUiLoader)
         self.save_btn = self.window.findChild(QPushButton, "saveButton")
         self.cancel_btn = self.window.findChild(QPushButton, "cancelButton")
-        self.load_img_btn = self.window.findChild(QToolButton, "loadImageButton")
+        self.load_img_btn = self.window.findChild(
+            QToolButton, "loadImageButton")
         self.image_label = self.window.findChild(QLabel, "imageLabel")
         self.name_input = self.window.findChild(QLineEdit, "nameLineEdit")
 
@@ -66,36 +69,42 @@ class ConfigPage:
             size = 120  # Tamaño del círculo
             rounded_pix = QPixmap(size, size)
             rounded_pix.fill(Qt.transparent)
-            
+
             # Crear un painter para dibujar el círculo
-            from PySide6.QtGui import QPainter, QBrush
+            from PySide6.QtGui import QPainter
             from PySide6.QtCore import QRect
             painter = QPainter(rounded_pix)
             painter.setRenderHint(QPainter.Antialiasing)
             painter.setRenderHint(QPainter.SmoothPixmapTransform)
-            
+
             # Crear un path circular para el clip
             from PySide6.QtGui import QPainterPath
             path = QPainterPath()
             path.addEllipse(0, 0, size, size)
             painter.setClipPath(path)
-            
-            # Escalar la imagen para que llene el círculo manteniendo la relación de aspecto
-            scaled = pix.scaled(size, size, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
-            
+
+            # Escalar la imagen para que llene el círculo
+            # manteniendo la relación de aspecto
+            scaled = pix.scaled(
+                size, size,
+                Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+
             # Centrar la imagen en el círculo
             x = (scaled.width() - size) / 2
             y = (scaled.height() - size) / 2
-            painter.drawPixmap(QRect(0, 0, size, size), scaled, QRect(x, y, size, size))
-            
+            painter.drawPixmap(
+                QRect(0, 0, size, size), scaled, QRect(x, y, size, size))
+
             painter.end()
-            
+
             self.image_label.setPixmap(rounded_pix)
         elif self.image_label:
             self.image_label.setText("No image")
 
     def on_load_image(self):
-        file_path, _ = QFileDialog.getOpenFileName(self.window, "Seleccionar imagen", "", "Imágenes (*.png *.jpg *.jpeg)")
+        file_path, _ = QFileDialog.getOpenFileName(
+            self.window, "Seleccionar imagen", "",
+            "Imágenes (*.png *.jpg *.jpeg)")
         if file_path:
             self.photo_path = file_path
             self.set_image(file_path)
@@ -105,8 +114,10 @@ class ConfigPage:
         photo = self.photo_path or ""
         self.main_window.change_username(name)
         self.use_case.execute(name, photo)
-        QMessageBox.information(self.window, "Guardado", "Perfil actualizado correctamente")
-        
+        QMessageBox.information(
+            self.window, "Guardado", "Perfil actualizado correctamente")
 
     def on_cancel(self):
-        QMessageBox.information(self.window, "No guardado", "Los cambios en el perfil no han sido guardados")
+        QMessageBox.information(
+            self.window, "No guardado",
+            "Los cambios en el perfil no han sido guardados")

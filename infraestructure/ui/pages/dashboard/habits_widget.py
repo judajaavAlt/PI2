@@ -1,9 +1,10 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QCheckBox, QFrame, QHBoxLayout
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QLabel, QScrollArea, QCheckBox, QHBoxLayout)
 from application.use_cases.list_habits import ListHabits
 from application.use_cases.update_habit import UpdateHabit
-from infraestructure.persistence.habit_repository_sqlite import HabitSqliteRepository
+from infraestructure.persistence.habit_repository_sqlite import (
+    HabitSqliteRepository)
 from application.controllers.habit_controller import HabitController
-from PySide6.QtCore import Qt
 
 
 # Widget that shows a list of today's habits in a scroll area
