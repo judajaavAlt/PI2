@@ -93,10 +93,10 @@ class HabitsWidget(QWidget):
                 self.change_habit_state(h))
 
             label = QLabel(f"{habit.streak} 🔥")
-            label.setAlignment(Qt.AlignRight)
 
             # Add elements to layout
             container_layout.addWidget(checkbox)
+            container_layout.addStretch()
             container_layout.addWidget(label)
 
             # Create a QWidget for layout and add it
