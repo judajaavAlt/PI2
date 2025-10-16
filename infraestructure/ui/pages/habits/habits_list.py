@@ -114,9 +114,15 @@ class HabitsListWidget(QWidget):
         # Layout principal
         main_layout = QVBoxLayout(self)
         self.list_widget = QListWidget()
-        self.list_widget.setSpacing(10)  # separación entre tarjetas
-        self.list_widget.setStyleSheet(
-            "QListWidget { background: #F5F5F5; border: none; }")
+        self.list_widget.setSpacing(15)  # separación entre tarjetas
+        self.list_widget.setStyleSheet("""
+            QListWidget {
+                background-color: white;
+                padding: 15px;
+                border-radius: 10px;
+                border: 3px solid lightgray;
+            }
+        """)
         main_layout.addWidget(self.list_widget)
 
         self.list_widget.itemClicked.connect(self.on_item_clicked)

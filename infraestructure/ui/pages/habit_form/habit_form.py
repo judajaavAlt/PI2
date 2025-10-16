@@ -125,7 +125,7 @@ class HabitFormPage:
             check.setChecked(False)
 
         self.show_message(
-            "Puedes editar o eliminar"
+            "ℹ️ Puedes editar o eliminar"
             " este hábito luego en la sección de Hábitos: Detalle")
 
     # If has id, then it was editing, so go back to detail page,
@@ -138,13 +138,13 @@ class HabitFormPage:
 
     def check_fields(self, name, description, frequency):
         if len(name) < 1:
-            self.show_message("Por favor ingrese un nombre")
+            self.show_message("ℹ️ Por favor ingrese un nombre")
             return False
         if len(description) < 1:
-            self.show_message("Por favor ingrese una descripción")
+            self.show_message("ℹ️ Por favor ingrese una descripción")
             return False
         if not any(frequency):
-            self.show_message("Por favor seleccione al menos un día")
+            self.show_message("ℹ️ Por favor seleccione al menos un día")
             return False
         if not self.props:
             if not self.is_habit_name_unique(name):
@@ -188,7 +188,7 @@ class HabitFormPage:
     def is_habit_name_unique(self, name):
         if self.controller.get_habit_name_existence(name):
             self.show_message(
-                "Ya existe un hábito con ese nombre."
+                "ℹ️ Ya existe un hábito con ese nombre."
                 " Por favor, elija otro")
             return False
         return True

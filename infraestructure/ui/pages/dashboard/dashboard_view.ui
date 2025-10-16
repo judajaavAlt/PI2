@@ -147,7 +147,8 @@ QLabel#percentage {
          <widget class="QLabel" name="bannerPercentage">
           <property name="styleSheet">
            <string notr="true">color: white;           /* Texto blanco */
-background-color: #007BFF;  /* Fondo azul #4A90E2 */</string>
+background-color: #007BFF;  /* Fondo azul #4A90E2 */
+font-weight: bold;</string>
           </property>
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:30pt; font-weight:700;&quot;&gt;50%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

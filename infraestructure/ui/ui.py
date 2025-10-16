@@ -110,23 +110,21 @@ class MainWindow:
         # Styles
         normal_style = """
             QPushButton {
-                background-color: #2c3e50;
-                font-weight: bold;
+                background-color: white;
                 color: gray;
             }
             QPushButton:hover {
-                background-color: #34495e;
-                color: lightgray;
+                background-color: #eeeeef;
             }
             QPushButton:pressed {
-                background-color: #1f2a36;
+                background-color: #ddddde;
             }
         """
 
         selected_style = """
             QPushButton {
-                background-color: #007BFF;
-                font-weight: bold;
+                background-color: #d4e7f8;
+                color: #007BFF;
             }
         """
 

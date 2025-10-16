@@ -107,6 +107,7 @@ class HabitsWidget(QWidget):
                 QWidget {
                     padding: 0;
                     border-radius: 3px;
+                    max-height: 50px;
                 }
                 QWidget#habit_w:hover {
                     background-color: #DDDDDD;

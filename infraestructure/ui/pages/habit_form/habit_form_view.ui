@@ -187,7 +187,8 @@ QCheckBox {
     border: 1px solid lightgray;
 	border-radius: 3px;
 	padding: 3px 0px 3px 3px;
-	max-width: 80px;
+	min-width: 85 px;
+	max-width: 85px;
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -264,9 +265,7 @@ QCheckBox {
    <item>
     <widget class="QWidget" name="buttons_widget" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget {
-	margin: 0px 70px;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
@@ -346,7 +345,7 @@ QPushButton:pressed {
       <string notr="true">background-color: transparent;</string>
      </property>
      <property name="text">
-      <string>Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
+      <string>ℹ️ Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
      </property>
     </widget>
    </item>
