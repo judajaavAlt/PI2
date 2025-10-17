@@ -127,7 +127,7 @@ background-color: lightgray;</string>
           <widget class="QLabel" name="label_2">
            <property name="styleSheet">
             <string notr="true">max-width: 35px;
-pading-left: 0;
+padding-left: 0;
 margin-right: 0;
 margin-left: 10px;
 font-size: 20px;</string>
