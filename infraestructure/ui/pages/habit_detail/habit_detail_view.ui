@@ -25,6 +25,10 @@
 	/*margin: 60px 20px 80px;*/
 }
 
+QWidget#habits_module {
+	min-width: 700px;
+}
+
 QLabel {
   color: black;
 }</string>

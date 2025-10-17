@@ -291,7 +291,7 @@ QPushButton#cancelButton:pressed {
    <item>
     <widget class="Line" name="line">
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">background-color: lightgray;</string>
      </property>
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
