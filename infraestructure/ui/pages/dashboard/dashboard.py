@@ -67,15 +67,22 @@ class DashboardPage(QWidget):
         # Actualizar el saludo con el nombre del usuario
         banner_greeting: QLabel = self.window.findChild(
             QLabel, "bannerGreeting")
-        if banner_greeting:
-            banner_greeting.setText(
-                f"Increíble progreso el día de hoy {user_name}!")
+        banner_gtn = "Este es tu"
+        if todays_percentage >= 70:
+            banner_gtn = "Increíble"
+            banner_msg = "¡Increíble! Sigues avanzando con fuerza."
+        elif todays_percentage >= 30:
+            banner_msg = "¡Sigue así! Vas bien, ¡continúa con este ritmo!"
+        else:
+            banner_msg = "¡Ánimo! Aún queda tiempo para mejorar, no te rindas."
+        banner_greeting.setText(
+            f"{banner_gtn} progreso el día de hoy {user_name}!")
 
         if label_banner_text:
             label_banner_text.setText(
                 f'Has completado {completed_todays_habits} '
                 f'de {total_todays_habits} '
-                'hábitos ¡Sigue así!'
+                f'hábitos {banner_msg}'
             )
         if today_progress_text:
             today_progress_text.setText(
