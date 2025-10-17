@@ -127,9 +127,6 @@ class DashboardPage(QWidget):
         # Crear el HabitsWidget
         self.habits_widget = HabitsWidget(self)
 
-        # Asegurar tamaño del widget
-        self.habits_widget.setFixedHeight(170)
-
         self.habits_container_layout.addWidget(self.habits_widget)
 
         # Forzar actualización del contenedor para que se muestre

@@ -14,12 +14,10 @@
    <string>Dashboard</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-   
-/* Estilos generales */
+   <string notr="true">/* Estilos generales */
 QWidget {
 	font-family: 'Segoe UI', Arial, sans-serif;
-	background-color: lightgray;
+	background-color: transparent;
 }
 
 /* 1. Estilo para el Banner Superior (Great progress today...) */
@@ -251,7 +249,7 @@ background-color: white</string>
           <property name="styleSheet">
            <string notr="true">QProgressBar {
 	border-radius: 10px;
-	background: lightgray;  /* Color de fondo de la barra */
+	background: #EEEEEE;  /* Color de fondo de la barra */
 }
 QProgressBar::chunk {
 	background: #007BFF; /* Color de la parte llena de la barra */
@@ -275,19 +273,6 @@ QProgressBar::chunk {
            <string>2 de 4 hábitos completados</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>
@@ -354,7 +339,7 @@ background-color: white</string>
           <property name="styleSheet">
            <string notr="true">QProgressBar {
 	border-radius: 10px;
-	background: lightgray;  /* Color de fondo de la barra */
+	background: #EEEEEE;  /* Color de fondo de la barra */
 }
 QProgressBar::chunk {
 	background: #7ED321; /* Color de la parte llena de la barra */
@@ -378,19 +363,6 @@ QProgressBar::chunk {
            <string>7 de 8 hábitos con racha activa</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>
@@ -437,7 +409,14 @@ padding: 0px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="habitsContainer" native="true"/>
+       <widget class="QWidget" name="habitsContainer" native="true">
+        <property name="styleSheet">
+         <string notr="true">QWidget#habitsContainer {
+	margin:0;
+	padding:0;
+}</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
