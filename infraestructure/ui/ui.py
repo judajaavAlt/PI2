@@ -63,7 +63,7 @@ class MainWindow:
     def load_pages(self):
         from PySide6.QtWidgets import QWidget, QVBoxLayout
         from PySide6.QtCore import Qt
-        self.dashboard_page = DashboardPage()
+        self.dashboard_page = DashboardPage(main_window=self)
         self.habits_page = HabitsPage(main_window=self)
         self.config_page = ConfigPage(main_window=self)
         self.habits_detail_page = HabitDetailPage(main_window=self)

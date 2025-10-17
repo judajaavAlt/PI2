@@ -132,6 +132,11 @@ class HabitsWidget(QWidget):
         self.controller.switch_habit_state(habit)
         self.parent.update_widgets()
 
+    def open_habit_detail(self, habit_id):
+        # Cambiar la vista a la página de detalle
+        habit_dict = {"id": habit_id}
+        self.parent.go_to_detail(habit_dict)
+
     def update_habit(self, habit):
         """Actualiza el hábito cuando se cambia el estado."""
         self.update_habit_uc.execute(

@@ -17,8 +17,9 @@ def generate_ui_file_path(file: str):
 
 
 class DashboardPage(QWidget):
-    def __init__(self):
+    def __init__(self, main_window=None):
         super().__init__()
+        self.main_window = main_window
         self.load_ui_file()
         self.controller = HabitController()
         # Agregar el use case para cargar el perfil del usuario
@@ -138,3 +139,6 @@ class DashboardPage(QWidget):
     def update_widgets(self):
         self.habits_widget.load_habits()
         self.update_habit_widget()
+
+    def go_to_detail(self, habit_dict):
+        self.main_window.change_page(3, habit_dict)
