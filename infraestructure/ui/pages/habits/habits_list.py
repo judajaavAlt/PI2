@@ -97,6 +97,7 @@ class HabitsListWidget(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.parent = parent
 
         self.repo = HabitSqliteRepository()
         self.list_habits_uc = ListHabits(self.repo)
@@ -150,6 +151,8 @@ class HabitsListWidget(QWidget):
 
         for habit in habits:
             self.add_habit(habit)
+
+        self.parent.label_quantity.setText(f'{len(habits)} Hábitos listados')
 
     def add_habit(self, habit):
         bg_color, icon_color = next(self.color_cycle)

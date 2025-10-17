@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 import os
@@ -12,13 +12,14 @@ def generate_ui_file_path(file: str):
     return os.path.join(base_dir, file)
 
 
-class HabitsPage:
+class HabitsPage(QWidget):
     """
     Página de hábitos que carga su UI desde .ui y agrega el HabitsListWidget
     dentro del contenedor especificado.
     """
 
     def __init__(self, main_window=None):
+        super().__init__()
         loader = QUiLoader()
         ui_path = generate_ui_file_path("habits_view.ui")
         ui_file = QFile(ui_path)
@@ -29,6 +30,10 @@ class HabitsPage:
         self.window = loader.load(ui_file)
         ui_file.close()
         self.main_window = main_window
+
+        # Encontrar el label donde se coloca la cantidad de hábitos listados
+        self.label_quantity = self.window.findChild(
+            QLabel, "label_habits_quantity")
 
         # Encontrar el contenedor donde se insertará la lista
         container = self.window.findChild(QWidget, "habits_list_container")
@@ -43,7 +48,7 @@ class HabitsPage:
             layout = QVBoxLayout(container)
 
         # Agregar el widget de la lista de hábitos
-        self.habits_list_widget = HabitsListWidget()
+        self.habits_list_widget = HabitsListWidget(self)
         layout.addWidget(self.habits_list_widget)
 
         # Conectar señal al método que abre la página de detalle

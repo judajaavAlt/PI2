@@ -42,6 +42,19 @@ color: gray;</string>
    <item>
     <widget class="QListWidget" name="habits_list_container"/>
    </item>
+   <item>
+    <widget class="QLabel" name="label_habits_quantity">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;
+font-size: 15px;
+padding: 0 0 0 20px;
+color: gray;</string>
+     </property>
+     <property name="text">
+      <string>0 Hábitos listados</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
