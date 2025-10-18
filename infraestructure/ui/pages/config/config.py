@@ -56,6 +56,7 @@ class ConfigPage:
         profile = self.use_case.load()
         if profile:
             if self.name_input:
+                print(profile)
                 self.name_input.setText(profile.name)
                 self.main_window.change_username(profile.name)
             if profile.photo_path:
