@@ -2,7 +2,8 @@
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, Qt
 from PySide6.QtWidgets import (
-    QFileDialog, QMessageBox, QPushButton, QLabel, QLineEdit, QToolButton)
+    QFileDialog, QPushButton, QLabel, QLineEdit, QToolButton, QHBoxLayout,
+    QDialog, QVBoxLayout)
 from PySide6.QtGui import QPixmap
 import os
 
@@ -114,10 +115,49 @@ class ConfigPage:
         photo = self.photo_path or ""
         self.main_window.change_username(name)
         self.use_case.execute(name, photo)
-        QMessageBox.information(
-            self.window, "Guardado", "Perfil actualizado correctamente")
+
+        self.show_centered_message(
+            self.window,
+            "Aviso",
+            "ℹ️",
+            "Perfil actualizado correctamente"
+        )
+
+    def show_centered_message(self, parent, title, icon, message):
+        dialog = QDialog(parent)
+        dialog.setWindowTitle(title)
+        dialog.setModal(True)
+        dialog.resize(400, 100)
+
+        main_layout = QVBoxLayout(dialog)
+
+        # --- Contenedor horizontal para ícono + mensaje ---
+        content_layout = QHBoxLayout()
+
+        # --- Lado izquierdo: icono (centrado verticalmente) ---
+        left_label = QLabel(icon)
+        left_label.setStyleSheet("font-size: 25px;")
+        left_label.setWordWrap(True)
+        left_label.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+
+        # --- Lado derecho: mensaje (centrado verticalmente) ---
+        right_label = QLabel(message)
+        right_label.setWordWrap(True)
+        right_label.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+
+        # Agregar ambos lados al layout horizontal
+        content_layout.addWidget(left_label)
+        content_layout.addWidget(right_label, stretch=1)
+
+        # Agregar layout de contenido al layout principal
+        main_layout.addLayout(content_layout)
+
+        dialog.exec()
 
     def on_cancel(self):
-        QMessageBox.information(
-            self.window, "No guardado",
-            "Los cambios en el perfil no han sido guardados")
+        self.show_centered_message(
+            self.window,
+            "Aviso",
+            "ℹ️",
+            "Los cambios en el perfil no han sido guardados"
+        )
