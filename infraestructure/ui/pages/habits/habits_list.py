@@ -97,6 +97,7 @@ class HabitsListWidget(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.parent = parent
 
         self.repo = HabitSqliteRepository()
         self.list_habits_uc = ListHabits(self.repo)
@@ -114,9 +115,15 @@ class HabitsListWidget(QWidget):
         # Layout principal
         main_layout = QVBoxLayout(self)
         self.list_widget = QListWidget()
-        self.list_widget.setSpacing(10)  # separación entre tarjetas
-        self.list_widget.setStyleSheet(
-            "QListWidget { background: #F5F5F5; border: none; }")
+        self.list_widget.setSpacing(15)  # separación entre tarjetas
+        self.list_widget.setStyleSheet("""
+            QListWidget {
+                background-color: white;
+                padding: 15px;
+                border-radius: 10px;
+                border: 3px solid lightgray;
+            }
+        """)
         main_layout.addWidget(self.list_widget)
 
         self.list_widget.itemClicked.connect(self.on_item_clicked)
@@ -144,6 +151,8 @@ class HabitsListWidget(QWidget):
 
         for habit in habits:
             self.add_habit(habit)
+
+        self.parent.label_quantity.setText(f'{len(habits)} Hábitos listados')
 
     def add_habit(self, habit):
         bg_color, icon_color = next(self.color_cycle)

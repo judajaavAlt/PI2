@@ -61,17 +61,30 @@ class MainWindow:
         ui_main_file.close()
 
     def load_pages(self):
-        self.dashboard_page = DashboardPage()
+        from PySide6.QtWidgets import QWidget, QVBoxLayout
+        from PySide6.QtCore import Qt
+        self.dashboard_page = DashboardPage(main_window=self)
         self.habits_page = HabitsPage(main_window=self)
         self.config_page = ConfigPage(main_window=self)
         self.habits_detail_page = HabitDetailPage(main_window=self)
         self.habits_form_page = HabitFormPage(main_window=self)
 
-        self.main_stacked_widget.addWidget(self.dashboard_page.window)
-        self.main_stacked_widget.addWidget(self.habits_page.window)
-        self.main_stacked_widget.addWidget(self.config_page.window)
-        self.main_stacked_widget.addWidget(self.habits_detail_page.window)
-        self.main_stacked_widget.addWidget(self.habits_form_page.window)
+        # Aux function to create a centered container
+        def centered_widget(widget):
+            container = QWidget()
+            layout = QVBoxLayout(container)
+            layout.addWidget(widget, alignment=Qt.AlignCenter)
+            layout.setContentsMargins(0, 0, 0, 0)
+            return container
+
+        self.main_stacked_widget.addWidget((self.dashboard_page.window))
+        self.main_stacked_widget.addWidget((self.habits_page.window))
+        self.main_stacked_widget.addWidget(
+            centered_widget(self.config_page.window))
+        self.main_stacked_widget.addWidget(
+            centered_widget(self.habits_detail_page.window))
+        self.main_stacked_widget.addWidget(
+            centered_widget(self.habits_form_page.window))
 
     def change_page(self, index: int, props: dict = None):
         match index:
@@ -97,23 +110,21 @@ class MainWindow:
         # Styles
         normal_style = """
             QPushButton {
-                background-color: #2c3e50;
-                font-weight: bold;
+                background-color: white;
                 color: gray;
             }
             QPushButton:hover {
-                background-color: #34495e;
-                color: lightgray;
+                background-color: #eeeeef;
             }
             QPushButton:pressed {
-                background-color: #1f2a36;
+                background-color: #ddddde;
             }
         """
 
         selected_style = """
             QPushButton {
-                background-color: #007BFF;
-                font-weight: bold;
+                background-color: #d4e7f8;
+                color: #007BFF;
             }
         """
 

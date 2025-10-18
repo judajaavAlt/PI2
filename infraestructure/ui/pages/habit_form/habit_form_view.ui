@@ -66,19 +66,6 @@ QPushButton {
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <widget class="QWidget" name="name_widget" native="true">
      <property name="styleSheet">
       <string notr="true">color: black;</string>
@@ -153,19 +140,6 @@ QWidget {
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <widget class="QWidget" name="frequency_widget" native="true">
      <property name="styleSheet">
       <string notr="true">QCheckBox::indicator {
@@ -177,17 +151,12 @@ QCheckBox::indicator:checked {
 	background-color: #0056b3;
 }
 
-QWidget {
-  padding: 0 0 0 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 QCheckBox {
     border: 1px solid lightgray;
 	border-radius: 3px;
 	padding: 3px 0px 3px 3px;
-	max-width: 80px;
+	min-width: 85 px;
+	max-width: 85px;
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -264,9 +233,7 @@ QCheckBox {
    <item>
     <widget class="QWidget" name="buttons_widget" native="true">
      <property name="styleSheet">
-      <string notr="true">QWidget {
-	margin: 0px 70px;
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
@@ -343,10 +310,11 @@ QPushButton:pressed {
    <item>
     <widget class="QLabel" name="label_message">
      <property name="styleSheet">
-      <string notr="true">background-color: transparent;</string>
+      <string notr="true">background-color: transparent;
+padding-bottom: 20px;</string>
      </property>
      <property name="text">
-      <string>Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
+      <string>ℹ️ Puedes editar o eliminar este hábito luego en la sección de Hábitos: Detalle</string>
      </property>
     </widget>
    </item>

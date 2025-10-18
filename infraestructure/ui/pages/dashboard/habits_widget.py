@@ -107,6 +107,7 @@ class HabitsWidget(QWidget):
                 QWidget {
                     padding: 0;
                     border-radius: 3px;
+                    max-height: 50px;
                 }
                 QWidget#habit_w:hover {
                     background-color: #DDDDDD;
@@ -130,6 +131,11 @@ class HabitsWidget(QWidget):
     def change_habit_state(self, habit):
         self.controller.switch_habit_state(habit)
         self.parent.update_widgets()
+
+    def open_habit_detail(self, habit_id):
+        # Cambiar la vista a la página de detalle
+        habit_dict = {"id": habit_id}
+        self.parent.go_to_detail(habit_dict)
 
     def update_habit(self, habit):
         """Actualiza el hábito cuando se cambia el estado."""
