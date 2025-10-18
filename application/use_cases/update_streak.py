@@ -11,7 +11,7 @@ class UpdateStreak:
         lost_days = tm.get_lost_days(days_passed)
         habit_days = habit.frequency.value
         keep_streak = sum([lost_days[i] & habit_days[i] for i in range(7)]) == 0
-        
+
         if keep_streak:
             habit.modify(streak=habit.streak.increase().value)
         else:

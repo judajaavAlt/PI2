@@ -1,19 +1,20 @@
-import json
-import os
+from infraestructure.persistence.data_handler import DataHandler
 
 
 class Preferences:
-    FILE_PATH = os.path.join(os.path.dirname(__file__), "UserPreferences.json")
+    @classmethod
+    def save(cls, user_pref: dict):
+        data = DataHandler.load_data()
+        data["user_preferences"] = {"name": user_pref["name"]}
+        DataHandler.save_data(data)
 
     @classmethod
-    def save(cls, data: dict):
-        os.makedirs(os.path.dirname(cls.FILE_PATH), exist_ok=True)
-        with open(cls.FILE_PATH, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-
-    @classmethod
-    def load(cls) -> dict:
-        if not os.path.exists(cls.FILE_PATH):
-            return {}
-        with open(cls.FILE_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+    def load(cls) -> dict[str, str]:
+        data = DataHandler.load_data()
+        does_exists = "user_preferences" in data
+        if not does_exists:
+            print(data)
+            data["user_preferences"] = {"name": "user"}
+            print(data)
+            DataHandler.save_data(data)
+        return data["user_preferences"]

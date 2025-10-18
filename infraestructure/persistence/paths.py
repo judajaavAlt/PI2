@@ -31,3 +31,7 @@ class paths:
     @classmethod
     def get_data_path(cls):
         return os.path.join(cls.get_data_dir(), '.data')
+
+    @classmethod
+    def get_pfp_path(cls):
+        return os.path.join(cls.get_data_dir(), 'pfp.webp')
